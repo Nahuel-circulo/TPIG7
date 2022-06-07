@@ -29,12 +29,12 @@ namespace TPIG7
             x = e.X;
             y = e.Y;
 
-            pintando = true;
+            pintar = true;
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (pintando)
+            if (pintar)
             {
                 rect = new Rectangle(
                     Math.Min(e.X, x),
@@ -49,7 +49,7 @@ namespace TPIG7
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
-            pintando = false;
+            pintar = false;
 
             x = 0;
             y = 0;
@@ -73,7 +73,7 @@ namespace TPIG7
             arrowStartY = e.Y;
 
             label1.Text = "Arrow Start: " + arrowStartX + ", " + arrowStartY;
-            pintando = true;
+            pintar = true;
         }
 
         private void panel2_MouseMove(object sender, MouseEventArgs e)
@@ -82,7 +82,7 @@ namespace TPIG7
             label2.Text = "Arrow End: " + e.X + ", " + e.Y;
 
 
-            if (pintando)
+            if (pintar)
             {
 
                 panel2.Refresh();
@@ -109,7 +109,7 @@ namespace TPIG7
             arrowEndX = e.X;
             arrowEndY = e.Y;
 
-            pintando = false;
+            pintar = false;
             panel2.Refresh();
         }
 
