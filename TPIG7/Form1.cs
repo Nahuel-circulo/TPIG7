@@ -17,7 +17,7 @@ namespace TPIG7
         private int y, arrowStartY, arrowEndY = -1;
         private Pen pen = new Pen(Color.Black, 5);
         private Rectangle rect;
-        private bool pintando = false;
+        private bool pintar = false;
 
         public Form1()
         {
