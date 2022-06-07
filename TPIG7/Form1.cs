@@ -15,7 +15,7 @@ namespace TPIG7
     {
         private int x, arrowStartX, arrowEndX = -1;
         private int y, arrowStartY, arrowEndY = -1;
-        private Pen pen = new Pen(Color.Black, 5);
+        private Pen pen = new Pen(Color.Red, 5);
         private Rectangle rect;
         private bool pintar = false;
 
