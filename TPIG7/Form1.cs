@@ -67,6 +67,11 @@ namespace TPIG7
             }
         }
 
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
         private void panel2_MouseDown(object sender, MouseEventArgs e)
         {
             arrowStartX = e.X;
