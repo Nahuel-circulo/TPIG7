@@ -28,6 +28,13 @@ namespace TPIG7
             g = this.panel2.CreateGraphics();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button1.Select();
+        }
+
+
+
         //private void panel3_Paint(object sender, PaintEventArgs e)
         //{
         //    using (Graphics g = this.panel2.CreateGraphics())
@@ -40,7 +47,7 @@ namespace TPIG7
         //    }
         //}
 
-        private void panel12_MouseDown(object sender, MouseEventArgs e)
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             x = e.X;
             y = e.Y;

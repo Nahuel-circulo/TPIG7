@@ -47,6 +47,11 @@ namespace TPIG7
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+         
+        }
+
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             pintar = false;
