@@ -21,6 +21,8 @@ namespace TPIG7
         private Rectangle rect;
         private Graphics g;
         private bool pintar = false;
+        private enum dibujos { cuadrado, circulo , linea, flechaDoble,flecha }
+        private int dibujo;
 
         public Form1()
         {
@@ -30,8 +32,30 @@ namespace TPIG7
 
         private void button1_Click(object sender, EventArgs e)
         {
-            button1.Select();
+            dibujo = 0;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            dibujo = 1;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dibujo= 2;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            dibujo = 3;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            dibujo = 4;
+        }
+
+
 
 
 
