@@ -13,21 +13,49 @@ namespace TPIG7
 {
     public partial class Form1 : Form
     {
-
-        private List<Rectangle> rectangulos= new List<Rectangle>();
+        // lista que se encarga de manejar todo lo que se dibuja en el grafico (graphics)
+        private List<Forma> rectangulos= new List<Forma>();
+        
+        //posisiones respectivas del maus en el grafico
         private int x,h, arrowStartX, arrowEndX = 0;
         private int y,w, arrowStartY, arrowEndY = 0;
-        private Pen pen = new Pen(Color.Black, 5);
+
+        //lapis para dibujar cosas en el grafico , contienen toda la informacion respectiva de un lapis XD
+        private Pen pen = new Pen(Color.Black, 2);
+
+        // rectangulo auviliar usado para el dibujo
         private Rectangle rect;
+
+        // el grafico :v
         private Graphics g;
+
+        // variable que se encarga de manejar en que momento se dibuja algo o no 
         private bool pintar = false;
+
+        // enumeracion que define los tipos de dibujos que se pueden hacer 
         private enum dibujos { cuadrado, circulo , linea, flechaDoble,flecha }
+
+        //variable que define que dibujo se esta por hacer en el momento
         private int dibujo;
 
+        //variable que define el brush( no tengo idea de que pingo es un brush ero lo defino aca )
+        private Brush brush;
+
+        private Font font;
+
+        private Bitmap bitmap;
+     
+
+        //constructor
         public Form1()
         {
             InitializeComponent();
-            g = this.panel2.CreateGraphics();
+            
+            brush = new SolidBrush(Color.Black);
+            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            g = Graphics.FromImage(bitmap);
+            g.Clear(Color.White);
+            pictureBox1.Image = bitmap;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -55,6 +83,16 @@ namespace TPIG7
             dibujo = 4;
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
 
 
 
@@ -71,7 +109,9 @@ namespace TPIG7
         //    }
         //}
 
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
+
+        //funcion que registra la pocicon de el maus al momento de precionar el boton del maus, valga la redundancia
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             x = e.X;
             y = e.Y;
@@ -79,55 +119,141 @@ namespace TPIG7
             pintar = true;
         }
 
-        private void panel2_MouseMove(object sender, MouseEventArgs e)
+        //funcion que se encarga de pintar mientras se esta precionanddo un boton 
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (pintar)
             {
+                g.Clear(Color.White);
                 h = e.X - x;
                 w = e.Y - y;
                 rect = new Rectangle(x, y, h, w);
-
-
-                panel2.Refresh();
-
                 g.DrawRectangle(pen, rect);
-
+                pictureBox1.Refresh();
+                
+               
+               
 
 
             }
 
         }
-
-        private void panel2_MouseUp(object sender, MouseEventArgs e)
+        //funcion qe se encargar de setear cosas cuando se suelta el boton del maus 
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             pintar = false;
-            rectangulos.Add(rect);
+            bool escrito = false;
+            g.DrawRectangle(pen, rect);
+            StringBuilder sb = new StringBuilder();
+            //do
+            //{
+            //    sb.Append()
+
+            //    g.DrawString()
+
+            //} while (escrito);
+            pictureBox1.Refresh();
+
+            rectangulos.Add(new Forma2D());
             x = 0;
             y = 0;
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
 
 
-            drawing();
+            foreach (Forma item in rectangulos)
+            {
+               // dibujar(item);
+            }
 
         }
 
-        private void drawing()
+        //private void dibujar(Forma forma)
+        //{
+        //    switch (forma.Tipo)
+        //    {
+        //        case 0: dibujarRectangulo(forma);
+        //            break;
+        //        default: break;
+                    
+
+                    
+        //    }
+            
+
+        //}
+
+        private void dibujarRectangulo(Forma2D forma)
         {
-
-            foreach (Rectangle item in rectangulos)
-            {
-                g.DrawRectangle(pen, item);
-            }
-
+            g.DrawRectangle(pen,forma.Rectangle);
+            //g.DrawString(forma.Contenido,forma.Font,brush,forma.PuntoDeEscritura);
         }
 
         private void panel2_MouseDown(object sender, MouseEventArgs e)
         {
             arrowStartX = e.X;
             arrowStartY = e.Y;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         //private void panel2_MouseDown(object sender, MouseEventArgs e)
@@ -193,7 +319,7 @@ namespace TPIG7
 
         //    }
 
-        }
+        
 
 
 

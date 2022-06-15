@@ -52,6 +52,11 @@ namespace TPIG7
          
         }
 
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             pintar = false;
@@ -62,11 +67,11 @@ namespace TPIG7
         {
            
             
-            drawing();
+           // Drawing();
         }
 
         
-        private void drawing()
+        private void Drawing()
         {
            
             foreach (Rectangle item in rectangles)

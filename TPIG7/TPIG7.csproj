@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlDeEscritura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ControlDeEscritura.Designer.cs">
+      <DependentUpon>ControlDeEscritura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forma2D.cs" />
     <Compile Include="Forma.cs" />
     <Compile Include="Form1.cs">
