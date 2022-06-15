@@ -44,6 +44,10 @@ namespace TPIG7
         private Font font;
 
         private Bitmap bitmap;
+
+        private char caracter;
+
+        
      
 
         //constructor
@@ -91,6 +95,15 @@ namespace TPIG7
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
 
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(e.KeyChar);
+            label1.Text = stringBuilder.ToString();
+            
+            
         }
 
 
@@ -147,10 +160,10 @@ namespace TPIG7
             StringBuilder sb = new StringBuilder();
             //do
             //{
-            //    sb.Append()
+            //    sb.Append(caracter);
 
-            //    g.DrawString()
-
+            //    g.DrawString(sb.ToString(), font, brush, rect.X, rect.Y);
+                
             //} while (escrito);
             pictureBox1.Refresh();
 
