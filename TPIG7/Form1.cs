@@ -100,17 +100,14 @@ namespace TPIG7
                 arrowEndX = e.X;
                 arrowEndY = e.Y;
 
+                g.Clear(Color.White);
+
+                g.DrawLine(pen, arrowStartX,
+                arrowStartY,
+                e.X,
+                e.Y);
+
                 pictureBox1.Refresh();
-                using (Graphics g = this.pictureBox1.CreateGraphics())
-                {
-
-                    g.DrawLine(pen, arrowStartX,
-                    arrowStartY,
-                    e.X,
-                    e.Y);
-
-                    pictureBox1.Invalidate();
-                }
 
 
             }
@@ -123,22 +120,21 @@ namespace TPIG7
 
             arrowEndX = e.X;
             arrowEndY = e.Y;
-
             pintar = false;
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
 
-            using (Graphics g = this.pictureBox1.CreateGraphics())
-            {
 
-                g.DrawLine(pen,
-                x,
-                y,
-                arrowEndX,
-                arrowEndY);
-            }
+            g.DrawLine(pen,
+            arrowStartX,
+            arrowStartY,
+            arrowEndX,
+            arrowEndY);
+
+
+
 
 
 
