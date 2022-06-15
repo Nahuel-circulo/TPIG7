@@ -126,7 +126,6 @@
             this.button1.Size = new System.Drawing.Size(127, 94);
             this.button1.TabIndex = 5;
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -136,11 +135,10 @@
             this.button2.Size = new System.Drawing.Size(127, 94);
             this.button2.TabIndex = 6;
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button5
             // 
-            this.button5.Image = global::TPIG7.Properties.Resources.Recurso_4solicitar;
+            this.button5.Image = global::TPIG7.Properties.Resources.Recurso_2solicitar1;
             this.button5.Location = new System.Drawing.Point(3, 403);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(127, 94);
@@ -176,6 +174,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(873, 549);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
