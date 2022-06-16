@@ -17,8 +17,8 @@ namespace TPIG7
         private List<Forma> rectangulos = new List<Forma>();
 
         //posisiones respectivas del maus en el grafico
-        private int x, h, arrowStartX, arrowEndX = 0;
-        private int y, w, arrowStartY, arrowEndY = 0;
+        private int positionX, width, arrowStartX, arrowEndX = 0;
+        private int positionY, height, arrowStartY, arrowEndY = 0;
 
         //lapis para dibujar cosas en el grafico , contienen toda la informacion respectiva de un lapis XD
         private Pen pen = new Pen(Color.Black, 5);
@@ -35,8 +35,8 @@ namespace TPIG7
         // enumeracion que define los tipos de dibujos que se pueden hacer 
         private enum dibujos { cuadrado, circulo, linea, flechaDoble, flecha }
 
-        //variable que define que dibujo se esta por hacer en el momento
-        private int dibujo;
+
+        string form = "rectangle";
 
         //variable que define el brush( no tengo idea de que pingo es un brush ero lo defino aca )
         private Brush brush;
@@ -45,20 +45,98 @@ namespace TPIG7
 
         private Bitmap bitmap;
 
+        
         private void button3_Click(object sender, EventArgs e)
         {
+            form = "line";
             pen.EndCap = LineCap.Flat;
             pen.StartCap = LineCap.Flat;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            form = "line";
             pen.EndCap = LineCap.ArrowAnchor;
             pen.StartCap = LineCap.ArrowAnchor;
         }
 
+        private void pictureBox1_Resize(object sender, EventArgs e)
+        {
+            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            g = Graphics.FromImage(bitmap);
+            g.Clear(Color.White);
+            pictureBox1.Image = bitmap;
+            pictureBox1.Refresh();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            form = "rectangle";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            form = "circle";
+        }
+
+
+
+        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "JPeg |*.jpg|BMP |*.bmp";
+            saveFileDialog1.Title = "Guardar como";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                // Save the Image via a FileStream created by the OpenFile method.
+                System.IO.FileStream fs =
+                   (System.IO.FileStream)saveFileDialog1.OpenFile();
+                // Saves the Image in the appropriate ImageFormat based upon the
+                // File type selected in the dialog box.
+                // NOTE that the FilterIndex property is one-based.
+                switch (saveFileDialog1.FilterIndex)
+                {
+                    case 1:
+                        this.pictureBox1.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+
+                    case 2:
+                        this.pictureBox1.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                }
+
+                fs.Close();
+            }
+        }
+
+        private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "JPeg |*.jpg|BMP |*.bmp";
+            openFileDialog1.Title = "Abrir imagen";
+            openFileDialog1.ShowDialog();
+
+            if (openFileDialog1.FileName != "")
+            {
+                bitmap = new Bitmap(openFileDialog1.FileName);
+                pictureBox1.Image = bitmap;
+                pictureBox1.Refresh();
+            }
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void button5_Click(object sender, EventArgs e)
         {
+            form = "line";
             pen.EndCap = LineCap.ArrowAnchor;
             pen.StartCap = LineCap.Flat;
         }
@@ -71,6 +149,7 @@ namespace TPIG7
 
             brush = new SolidBrush(Color.Black);
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            
             g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
             pictureBox1.Image = bitmap;
@@ -82,6 +161,8 @@ namespace TPIG7
         {
             arrowStartX = e.X;
             arrowStartY = e.Y;
+            positionX = e.X;
+            positionY = e.Y;
 
             pintar = true;
         }
@@ -91,21 +172,43 @@ namespace TPIG7
         {
             if (pintar)
             {
-                //g.Clear(Color.White);
-                //h = e.X - x;
-                //w = e.Y - y;
-                //rect = new Rectangle(x, y, h, w);
-                //g.DrawRectangle(pen, rect);
-                //pictureBox1.Refresh();
-                arrowEndX = e.X;
-                arrowEndY = e.Y;
+
 
                 g.Clear(Color.White);
 
-                g.DrawLine(pen, arrowStartX,
-                arrowStartY,
-                e.X,
-                e.Y);
+                if (form == "rectangle" || form == "circle")
+                {
+                    g.Clear(Color.White);
+                    rect = new Rectangle(
+                    Math.Min(e.X, positionX),
+                    Math.Min(e.Y, positionY),
+                    (e.X - positionX),
+                    (e.Y - positionY));
+                }
+
+                if (form == "rectangle")
+                {
+                    g.DrawRectangle(pen, rect);
+                }
+
+                if (form == "circle")
+                {
+                    g.DrawEllipse(pen, rect);
+                }
+
+                if (form == "line")
+                {
+
+                    arrowEndX = e.X;
+                    arrowEndY = e.Y;
+
+                    g.DrawLine(pen, arrowStartX,
+                    arrowStartY,
+                    e.X,
+                    e.Y);
+
+                }
+
 
                 pictureBox1.Refresh();
 
@@ -126,12 +229,25 @@ namespace TPIG7
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
 
+            if (form == "rectangle")
+            {
+                g.Clear(Color.White);
+                g.DrawRectangle(pen, rect);
+            }
 
-            g.DrawLine(pen,
-            arrowStartX,
-            arrowStartY,
-            arrowEndX,
-            arrowEndY);
+            if (form == "circle")
+            {
+                g.DrawEllipse(pen, rect);
+            }
+
+            if (form == "line")
+            {
+                g.DrawLine(pen,
+                arrowStartX,
+                arrowStartY,
+                arrowEndX,
+                arrowEndY);
+            }
 
 
 
@@ -139,76 +255,6 @@ namespace TPIG7
 
 
         }
-
-
-
-
-
-
-        //private void panel2_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    arrowStartX = e.X;
-        //    arrowStartY = e.Y;
-
-        //    label1.Text = "Arrow Start: " + arrowStartX + ", " + arrowStartY;
-        //    pintar = true;
-        //}
-
-        //private void panel2_MouseMove(object sender, MouseEventArgs e)
-        //{
-
-        //    label2.Text = "Arrow End: " + e.X + ", " + e.Y;
-
-
-        //    if (pintar)
-        //    {
-
-        //        panel2.Refresh();
-        //        pen.StartCap = LineCap.RoundAnchor;
-        //        pen.EndCap = LineCap.ArrowAnchor;
-        //        using (Graphics g = this.panel2.CreateGraphics())
-        //        {
-
-        //            g.DrawLine(pen, arrowStartX,
-        //            arrowStartY,
-        //            e.X,
-        //            e.Y);
-
-
-        //        }
-        //        panel1.Invalidate();
-
-        //    }
-
-        //}
-
-        //private void panel2_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    arrowEndX = e.X;
-        //    arrowEndY = e.Y;
-
-        //    pintar = false;
-        //    panel2.Refresh();
-        //}
-
-        //private void panel2_Paint(object sender, PaintEventArgs e)
-        //{
-        //    using (Graphics g = this.panel2.CreateGraphics())
-        //    {
-        //        Pen pen = new Pen(Color.Black, 5);
-        //        pen.StartCap = LineCap.RoundAnchor;
-        //        pen.EndCap = LineCap.ArrowAnchor;
-
-        //        g.DrawLine(pen, arrowStartX,
-        //        arrowStartY,
-        //        arrowEndX,
-        //        arrowEndY);
-
-        //        pen.Dispose();
-
-        //    }
-
-
 
 
 
