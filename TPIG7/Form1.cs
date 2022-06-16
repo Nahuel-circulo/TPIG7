@@ -47,8 +47,8 @@ namespace TPIG7
 
         private char caracter;
 
-        
-     
+        bool escrito = false;
+
 
         //constructor
         public Form1()
@@ -87,24 +87,13 @@ namespace TPIG7
             dibujo = 4;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
+       
 
-        }
+       
 
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
-        {
+       
 
-        }
-
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(e.KeyChar);
-            label1.Text = stringBuilder.ToString();
-            
-            
-        }
+       
 
 
 
@@ -137,71 +126,91 @@ namespace TPIG7
         {
             if (pintar)
             {
-                g.Clear(Color.White);
-                h = e.X - x;
-                w = e.Y - y;
-                rect = new Rectangle(x, y, h, w);
-                g.DrawRectangle(pen, rect);
-                pictureBox1.Refresh();
-                
-               
-               
-
-
+                switch (dibujo)
+                {
+                    case 0:
+                        previewRectangulo(e);
+                        break;
+                    case 1:
+                        previewCirculos(e);
+                        break;
+                    default: break;
+                }
             }
 
         }
+        private void previewRectangulo(MouseEventArgs e)
+        {
+            g.Clear(Color.White);
+            h = e.X - x;
+            w = e.Y - y;
+            rect = new Rectangle(x, y, h, w);
+            g.DrawRectangle(pen, rect);
+            dibujar();
+            pictureBox1.Refresh();
+        }
+        private void previewCirculos(MouseEventArgs e)
+        {
+            g.Clear(Color.White);
+            h = e.X - x;
+            w = e.Y - y;
+            rect = new Rectangle(x, y, h, w);
+            g.DrawEllipse(pen, rect);
+            dibujar();
+            pictureBox1.Refresh();
+        }
+
+
+
         //funcion qe se encargar de setear cosas cuando se suelta el boton del maus 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             pintar = false;
-            bool escrito = false;
-            g.DrawRectangle(pen, rect);
-            StringBuilder sb = new StringBuilder();
+            
+           // g.DrawRectangle(pen, rect);
+            //StringBuilder sb = new StringBuilder();
             //do
             //{
             //    sb.Append(caracter);
 
             //    g.DrawString(sb.ToString(), font, brush, rect.X, rect.Y);
-                
-            //} while (escrito);
-            pictureBox1.Refresh();
 
-            rectangulos.Add(new Forma2D());
+            //} while (escrito);
+            
+
+            rectangulos.Add(new Forma2D(rect,dibujo));
             x = 0;
             y = 0;
+            foreach (Forma2D item in rectangulos)
+            {
+                item.Dibujar(g, pen);
+            }
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            dibujar();
+        }
 
-
-            foreach (Forma item in rectangulos)
+        private void dibujar()
+        {
+            foreach (Forma2D item in rectangulos)
             {
-               // dibujar(item);
+                item.Dibujar(g, pen);
             }
 
         }
+      
 
-        //private void dibujar(Forma forma)
-        //{
-        //    switch (forma.Tipo)
-        //    {
-        //        case 0: dibujarRectangulo(forma);
-        //            break;
-        //        default: break;
-                    
 
-                    
-        //    }
-            
 
-        //}
 
-        private void dibujarRectangulo(Forma2D forma)
+      
+
+        private void dibujarCirculo(Forma2D forma)
         {
-            g.DrawRectangle(pen,forma.Rectangle);
-            //g.DrawString(forma.Contenido,forma.Font,brush,forma.PuntoDeEscritura);
+            g.DrawRectangle(pen, forma.Rectangle);
+
         }
 
         private void panel2_MouseDown(object sender, MouseEventArgs e)

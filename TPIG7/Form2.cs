@@ -67,7 +67,7 @@ namespace TPIG7
         {
            
             
-           // Drawing();
+           Drawing();
         }
 
         

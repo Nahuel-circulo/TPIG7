@@ -12,24 +12,49 @@ namespace TPIG7
     {
 
         private Rectangle rectangle;
-       
-        
 
-        public Forma2D(Rectangle rectangle, int tipo, string contenido, Font font)
+
+        public Forma2D(Rectangle rectangle, int tipo)
         {
-            this.Font = font;
+            
             this.Rectangle = rectangle;
             this.Tipo = tipo;
-            this.Contenido = contenido;
-            this.puntoDeEscritura = new Point(rectangle.Size);
+           
         }
+
+
+
+
+        //public Forma2D(Rectangle rectangle, int tipo, string contenido, Font font)
+        //{
+        //    this.Font = font;
+        //    this.Rectangle = rectangle;
+        //    this.Tipo = tipo;
+        //    this.Contenido = contenido;
+        //    this.puntoDeEscritura = new Point(rectangle.Size);
+        //}
         public Forma2D()
         { 
         }
 
         public Rectangle Rectangle { get => rectangle; set => rectangle = value; }
 
-        
+        public void Dibujar(Graphics g, Pen p)
+        {
+            switch (Tipo)
+            {
+                case 0:
+                    g.DrawRectangle(p, rectangle);
+                    break;
+                case 1:
+                    g.DrawEllipse(p, rectangle);
+                    break;
+
+
+
+
+            }
+        }
      
 
         
