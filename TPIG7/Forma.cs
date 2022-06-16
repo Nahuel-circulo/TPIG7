@@ -7,8 +7,7 @@ using System.Drawing;
 
 namespace TPIG7
 {
-    internal abstract class Forma 
-    {
+    internal abstract class Forma :ICollection
         //private Font font;
         //private string contenido;
         private int tipo;

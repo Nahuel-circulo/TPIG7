@@ -65,26 +65,38 @@ namespace TPIG7
         private void button1_Click(object sender, EventArgs e)
         {
             dibujo = 0;
+            pen.EndCap = LineCap.Flat;
+            pen.StartCap = LineCap.Flat;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             dibujo = 1;
+            pen.EndCap = LineCap.Flat;
+            pen.StartCap = LineCap.Flat;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             dibujo= 2;
+            pen.EndCap = LineCap.Flat;
+            pen.StartCap = LineCap.Flat;
+
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             dibujo = 3;
+            
+            pen.EndCap = LineCap.Flat;
+            pen.StartCap = LineCap.ArrowAnchor;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            dibujo = 4;
+            dibujo = 4; 
+            pen.EndCap = LineCap.ArrowAnchor;
+            pen.StartCap = LineCap.ArrowAnchor;
         }
 
        
@@ -134,6 +146,9 @@ namespace TPIG7
                     case 1:
                         previewCirculos(e);
                         break;
+                    case 2:
+                        previewLinea(e);
+                        break;
                     default: break;
                 }
             }
@@ -159,6 +174,15 @@ namespace TPIG7
             dibujar();
             pictureBox1.Refresh();
         }
+        private void previewLinea(MouseEventArgs e)
+        {
+            g.Clear(Color.White);
+            
+            g.DrawLine(pen, x, y, e.X, e.Y);
+            dibujar();
+            pictureBox1.Refresh();
+
+        }
 
 
 
@@ -177,14 +201,18 @@ namespace TPIG7
 
             //} while (escrito);
             
-
-            rectangulos.Add(new Forma2D(rect,dibujo));
+            if(dibujo == 0 || dibujo == 1) 
+            { 
+                rectangulos.Add(new Forma2D(rect, dibujo));
+            }
+            else
+            {
+                rectangulos.Add(new Forma1D(pen, x, y, e.X, e.Y));
+            }
+            
             x = 0;
             y = 0;
-            foreach (Forma2D item in rectangulos)
-            {
-                item.Dibujar(g, pen);
-            }
+          
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -198,6 +226,11 @@ namespace TPIG7
             {
                 item.Dibujar(g, pen);
             }
+            foreach (Forma1D item in rectangulos)
+            {
+                item.Dibujar(g, pen);
+            }
+
 
         }
       
@@ -219,6 +252,37 @@ namespace TPIG7
             arrowStartY = e.Y;
         }
 
+        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "JPeg |*.jpg|BMP |*.bmp";
+            saveFileDialog1.Title = "Guardar como";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                // Save the Image via a FileStream created by the OpenFile method.
+                System.IO.FileStream fs =
+                   (System.IO.FileStream)saveFileDialog1.OpenFile();
+                // Saves the Image in the appropriate ImageFormat based upon the
+                // File type selected in the dialog box.
+                // NOTE that the FilterIndex property is one-based.
+                switch (saveFileDialog1.FilterIndex)
+                {
+                    case 1:
+                        this.pictureBox1.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+
+                    case 2:
+                        this.pictureBox1.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                }
+
+                fs.Close();
+            }
+        }
 
 
 
@@ -341,7 +405,7 @@ namespace TPIG7
 
         //    }
 
-        
+
 
 
 

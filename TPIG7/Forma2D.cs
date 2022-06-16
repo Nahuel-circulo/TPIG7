@@ -8,7 +8,7 @@ using System.Drawing;
 namespace TPIG7
 {
     //clase que se encarga de registrar todos los datos de una figura en 2D sea un rectangulo o un circulo 
-    internal class Forma2D : Forma
+    internal class Forma2D : Forma,ico
     {
 
         private Rectangle rectangle;
