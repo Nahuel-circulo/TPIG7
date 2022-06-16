@@ -7,24 +7,24 @@ using System.Drawing;
 
 namespace TPIG7
 {
-    internal abstract class Forma :ICollection
+    internal interface Forma
+    {
         //private Font font;
         //private string contenido;
-        private int tipo;
+        // private int tipo;
         //protected Point puntoDeEscritura;
 
 
 
 
-      //  public Font Font { get => font; set => font = value; }
-       // public string Contenido { get => contenido; set => contenido = value; }
-        public int Tipo { get => tipo; set => tipo = value; }
+        //  public Font Font { get => font; set => font = value; }
+        // public string Contenido { get => contenido; set => contenido = value; }
+        //  public int Tipo { get => tipo; set => tipo = value; }
         //public Point PuntoDeEscritura { get => puntoDeEscritura; }
 
-        public void Dibujar()
-        {
-            
-        }
+         void Dibujar(Graphics g, Pen p);
+        
+        
        
     }
 }

@@ -14,7 +14,7 @@ namespace TPIG7
     public partial class Form1 : Form
     {
         // lista que se encarga de manejar todo lo que se dibuja en el grafico (graphics)
-        private List<Forma> rectangulos= new List<Forma>();
+        private List<Forma> rectangulos;
         
         //posisiones respectivas del maus en el grafico
         private int x,h, arrowStartX, arrowEndX = 0;
@@ -38,16 +38,18 @@ namespace TPIG7
         //variable que define que dibujo se esta por hacer en el momento
         private int dibujo;
 
-        //variable que define el brush( no tengo idea de que pingo es un brush ero lo defino aca )
+        //variable que define el brush( no tengo idea de que pingo es un brush pero lo defino aca )
         private Brush brush;
 
+        //todavia no uso esto pero es una fuente 
         private Font font;
 
+        //variable que define el bitmap( no tengo idea de que pingo es un bitmap pero lo defino aca )
         private Bitmap bitmap;
 
-        private char caracter;
+        
 
-        bool escrito = false;
+        bool ecribiendo = false;
 
 
         //constructor
@@ -60,8 +62,10 @@ namespace TPIG7
             g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
             pictureBox1.Image = bitmap;
+            rectangulos = new List<Forma>();
         }
 
+        // funciones que setean cosas dependiendo de la erramienta que se use 
         private void button1_Click(object sender, EventArgs e)
         {
             dibujo = 0;
@@ -88,8 +92,9 @@ namespace TPIG7
         {
             dibujo = 3;
             
-            pen.EndCap = LineCap.Flat;
-            pen.StartCap = LineCap.ArrowAnchor;
+            pen.EndCap = LineCap.ArrowAnchor;
+            pen.StartCap = LineCap.Flat;
+           
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -98,31 +103,6 @@ namespace TPIG7
             pen.EndCap = LineCap.ArrowAnchor;
             pen.StartCap = LineCap.ArrowAnchor;
         }
-
-       
-
-       
-
-       
-
-       
-
-
-
-
-
-        //private void panel3_Paint(object sender, PaintEventArgs e)
-        //{
-        //    using (Graphics g = this.panel2.CreateGraphics())
-        //    {
-        //        Pen pen = new Pen(Color.Black, 5);
-
-        //        g.DrawRectangle(pen, rect);
-
-        //        pen.Dispose();
-        //    }
-        //}
-
 
         //funcion que registra la pocicon de el maus al momento de precionar el boton del maus, valga la redundancia
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -133,7 +113,7 @@ namespace TPIG7
             pintar = true;
         }
 
-        //funcion que se encarga de pintar mientras se esta precionanddo un boton 
+        //funcion que se encarga de pintar previews de las formas mientras se esta precionanddo un boton del maus
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (pintar)
@@ -149,11 +129,19 @@ namespace TPIG7
                     case 2:
                         previewLinea(e);
                         break;
+                    case 3:
+                        previewLinea(e);
+                        break;
+                    case 4:
+                        previewLinea(e);
+                        break;
                     default: break;
                 }
             }
 
         }
+
+        //creo que ya te das cuenta de que hace cada funcin de avajo no ??
         private void previewRectangulo(MouseEventArgs e)
         {
             g.Clear(Color.White);
@@ -162,7 +150,7 @@ namespace TPIG7
             rect = new Rectangle(x, y, h, w);
             g.DrawRectangle(pen, rect);
             dibujar();
-            pictureBox1.Refresh();
+            
         }
         private void previewCirculos(MouseEventArgs e)
         {
@@ -172,7 +160,7 @@ namespace TPIG7
             rect = new Rectangle(x, y, h, w);
             g.DrawEllipse(pen, rect);
             dibujar();
-            pictureBox1.Refresh();
+            
         }
         private void previewLinea(MouseEventArgs e)
         {
@@ -180,10 +168,31 @@ namespace TPIG7
             
             g.DrawLine(pen, x, y, e.X, e.Y);
             dibujar();
-            pictureBox1.Refresh();
+            
 
         }
 
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            //if (ecribiendo)
+            //{
+                StringBuilder stringBuilder = new StringBuilder(label1.Text);
+                KeysConverter converter = new KeysConverter();
+
+                if (e.KeyCode == Keys.Back )
+                {
+                    stringBuilder.Remove(stringBuilder.Length - 1, 1);
+                }
+                else
+                {
+                    stringBuilder.Append(converter.ConvertToString(e.KeyCode));
+                }
+
+                label1.Text = stringBuilder.ToString();
+                label1.Refresh();
+            //}
+        }
 
 
         //funcion qe se encargar de setear cosas cuando se suelta el boton del maus 
@@ -209,6 +218,7 @@ namespace TPIG7
             {
                 rectangulos.Add(new Forma1D(pen, x, y, e.X, e.Y));
             }
+            dibujar();
             
             x = 0;
             y = 0;
@@ -222,29 +232,35 @@ namespace TPIG7
 
         private void dibujar()
         {
-            foreach (Forma2D item in rectangulos)
+            foreach (Forma item in rectangulos)
             {
                 item.Dibujar(g, pen);
             }
-            foreach (Forma1D item in rectangulos)
-            {
-                item.Dibujar(g, pen);
-            }
-
-
+            pictureBox1.Refresh();
         }
       
-
-
-
-
-      
-
-        private void dibujarCirculo(Forma2D forma)
+        private StringBuilder Escrivir(Keys keys)
         {
-            g.DrawRectangle(pen, forma.Rectangle);
-
+            StringBuilder stringBuilder = new StringBuilder();
+            KeysConverter converter = new KeysConverter();
+            
+            if (keys == Keys.Return)
+            {
+                stringBuilder.Remove(stringBuilder.Length - 1, 1);
+            }
+            else 
+            {
+                stringBuilder.Append(converter.ConvertToString(keys));
+            }
+            return stringBuilder;
         }
+
+
+
+
+      
+
+      
 
         private void panel2_MouseDown(object sender, MouseEventArgs e)
         {

@@ -8,9 +8,9 @@ using System.Drawing;
 namespace TPIG7
 {
     //clase que se encarga de registrar todos los datos de una figura en 2D sea un rectangulo o un circulo 
-    internal class Forma2D : Forma,ico
+    internal class Forma2D : Forma
     {
-
+        private int tipo;
         private Rectangle rectangle;
 
 
@@ -38,6 +38,7 @@ namespace TPIG7
         }
 
         public Rectangle Rectangle { get => rectangle; set => rectangle = value; }
+        public int Tipo { get => tipo; set => tipo = value; }
 
         public void Dibujar(Graphics g, Pen p)
         {

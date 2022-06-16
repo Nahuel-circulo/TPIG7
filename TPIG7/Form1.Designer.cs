@@ -128,6 +128,7 @@
             this.button1.TabIndex = 5;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button2
             // 
@@ -141,7 +142,7 @@
             // 
             // button5
             // 
-            this.button5.Image = global::TPIG7.Properties.Resources.Recurso_4solicitar;
+            this.button5.Image = global::TPIG7.Properties.Resources.Recurso_1solicitar;
             this.button5.Location = new System.Drawing.Point(3, 403);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(127, 94);
@@ -151,7 +152,7 @@
             // 
             // button4
             // 
-            this.button4.Image = global::TPIG7.Properties.Resources.Recurso_1solicitar;
+            this.button4.Image = global::TPIG7.Properties.Resources.Recurso_2solicitar;
             this.button4.Location = new System.Drawing.Point(3, 303);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(127, 94);
@@ -204,7 +205,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
-            
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolsPanel.ResumeLayout(false);
