@@ -15,10 +15,11 @@ namespace TPIG7
     {
         // lista que se encarga de manejar todo lo que se dibuja en el grafico (graphics)
         private List<Forma> rectangulos = new List<Forma>();
+        private List<Line> lineas = new List<Line>();
 
         //posisiones respectivas del maus en el grafico
-        private int positionX, width, arrowStartX, arrowEndX = 0;
-        private int positionY, height, arrowStartY, arrowEndY = 0;
+        private int positionX, arrowStartX, arrowEndX = 0;
+        private int positionY, arrowStartY, arrowEndY = 0;
 
         //lapis para dibujar cosas en el grafico , contienen toda la informacion respectiva de un lapis XD
         private Pen pen = new Pen(Color.Black, 5);
@@ -32,8 +33,7 @@ namespace TPIG7
         // variable que se encarga de manejar en que momento se dibuja algo o no 
         private bool pintar = false;
 
-        // enumeracion que define los tipos de dibujos que se pueden hacer 
-        private enum dibujos { cuadrado, circulo, linea, flechaDoble, flecha }
+
 
 
         string form = "rectangle";
@@ -45,7 +45,7 @@ namespace TPIG7
 
         private Bitmap bitmap;
 
-        
+
         private void button3_Click(object sender, EventArgs e)
         {
             form = "line";
@@ -60,15 +60,7 @@ namespace TPIG7
             pen.StartCap = LineCap.ArrowAnchor;
         }
 
-        private void pictureBox1_Resize(object sender, EventArgs e)
-        {
-            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            g = Graphics.FromImage(bitmap);
-            g.Clear(Color.White);
-            pictureBox1.Image = bitmap;
-            pictureBox1.Refresh();
 
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -79,8 +71,6 @@ namespace TPIG7
         {
             form = "circle";
         }
-
-
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -149,14 +139,13 @@ namespace TPIG7
 
             brush = new SolidBrush(Color.Black);
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            
+
             g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
             pictureBox1.Image = bitmap;
         }
 
 
-        //funcion que registra la pocicon de el maus al momento de precionar el boton del maus, valga la redundancia
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             arrowStartX = e.X;
@@ -167,18 +156,16 @@ namespace TPIG7
             pintar = true;
         }
 
-        //funcion que se encarga de pintar mientras se esta precionanddo un boton 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (pintar)
             {
 
-
                 g.Clear(Color.White);
 
                 if (form == "rectangle" || form == "circle")
                 {
-                    g.Clear(Color.White);
+
                     rect = new Rectangle(
                     Math.Min(e.X, positionX),
                     Math.Min(e.Y, positionY),
@@ -198,7 +185,6 @@ namespace TPIG7
 
                 if (form == "line")
                 {
-
                     arrowEndX = e.X;
                     arrowEndY = e.Y;
 
@@ -206,57 +192,107 @@ namespace TPIG7
                     arrowStartY,
                     e.X,
                     e.Y);
-
                 }
 
-
                 pictureBox1.Refresh();
-
 
             }
 
         }
 
-        //funcion qe se encargar de setear cosas cuando se suelta el boton del maus 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
 
             arrowEndX = e.X;
             arrowEndY = e.Y;
+
+            
+            if (form == "rectangle")
+            {
+                //g.DrawRectangle(pen, rect);
+                rectangulos.Add(new Forma("rectangle", rect));
+            }
+
+            if (form == "circle")
+            {
+                //g.DrawEllipse(pen, rect);
+                rectangulos.Add(new Forma("circle", rect));
+            }
+
+            if (form == "line")
+            {
+                //g.DrawLine(pen,
+                //arrowStartX,
+                //arrowStartY,
+                //arrowEndX,
+                //arrowEndY);
+
+                lineas.Add(new Line(arrowStartX, arrowStartY, arrowEndX, arrowEndY, pen));
+            }
+
             pintar = false;
+
+
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
 
-            if (form == "rectangle")
-            {
-                g.Clear(Color.White);
-                g.DrawRectangle(pen, rect);
-            }
+            //if (form == "rectangle")
+            //{
+            //    g.Clear(Color.White);
+            //    g.DrawRectangle(pen, rect);
+            //    rectangulos.Add(new Forma("rectangle", rect));
+            //}
 
-            if (form == "circle")
-            {
-                g.DrawEllipse(pen, rect);
-            }
+            //if (form == "circle")
+            //{
+            //    g.DrawEllipse(pen, rect);
+            //    rectangulos.Add(new Forma("circle", rect));
+            //}
 
-            if (form == "line")
-            {
-                g.DrawLine(pen,
-                arrowStartX,
-                arrowStartY,
-                arrowEndX,
-                arrowEndY);
-            }
+            //if (form == "line")
+            //{
+            //    g.DrawLine(pen,
+            //    arrowStartX,
+            //    arrowStartY,
+            //    arrowEndX,
+            //    arrowEndY);
+
+            //    lineas.Add(new Line(arrowStartX, arrowStartY, arrowEndX, arrowEndY,pen));
+            //}
 
 
-
-
-
-
+            drawing();
         }
 
+        private void drawing()
+        {
+            g.Clear(Color.White);
+            foreach (Forma item in rectangulos)
+            {
+                if (item.Type == "rectangle")
+                {
+                    g.DrawRectangle(pen, item.Form);
+                }
+                else
+                {
+                    
+                g.DrawEllipse(pen, item.Form);
+                }
+            }
 
+            foreach (Line item in lineas)
+            {
+                g.DrawLine(item.Lapiz,
+                item.ArrowPositionXStart,
+                item.ArrowPostionYStart,
+                item.ArrowPositionXEnd,
+                item.ArrowPostionYEnd);
+            }
+            
+
+        }
 
     }
 }

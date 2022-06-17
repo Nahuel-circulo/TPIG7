@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
 
 namespace TPIG7
 {
-    internal abstract class Forma
+    internal class Forma
     {
-        private Font font;
-        private string contenido;
-        private int tipo;
-        protected Point puntoDeEscritura;
 
+        private string type;
 
+        private System.Drawing.Rectangle form;
 
+        public Forma(string type, Rectangle form)
+        {
+            this.Type = type;
+            this.Form = form;
+        }
 
-        public Font Font { get => font; set => font = value; }
-        public string Contenido { get => contenido; set => contenido = value; }
-        public int Tipo { get => tipo; set => tipo = value; }
-        public Point PuntoDeEscritura { get => puntoDeEscritura; }
+        public Rectangle Form { get => form; set => form = value; }
+        public string Type { get => type; set => type = value; }
     }
 }
