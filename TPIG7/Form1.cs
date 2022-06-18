@@ -24,7 +24,7 @@ namespace TPIG7
         //lapis para dibujar cosas en el grafico , contienen toda la informacion respectiva de un lapis XD
         private Pen pen = new Pen(Color.Black, 5);
 
-        // rectangulo auviliar usado para el dibujo
+        // rectangulo auxiliar usado para el dibujo
         private Rectangle rect;
 
         // el grafico :v
@@ -32,8 +32,6 @@ namespace TPIG7
 
         // variable que se encarga de manejar en que momento se dibuja algo o no 
         private bool pintar = false;
-
-
 
 
         string form = "rectangle";
@@ -60,8 +58,6 @@ namespace TPIG7
             pen.StartCap = LineCap.ArrowAnchor;
         }
 
-
-
         private void button1_Click(object sender, EventArgs e)
         {
             form = "rectangle";
@@ -87,12 +83,10 @@ namespace TPIG7
 
             if (saveFileDialog1.FileName != "")
             {
-                // Save the Image via a FileStream created by the OpenFile method.
+
                 System.IO.FileStream fs =
                    (System.IO.FileStream)saveFileDialog1.OpenFile();
-                // Saves the Image in the appropriate ImageFormat based upon the
-                // File type selected in the dialog box.
-                // NOTE that the FilterIndex property is one-based.
+
                 switch (saveFileDialog1.FilterIndex)
                 {
                     case 1:
@@ -155,6 +149,35 @@ namespace TPIG7
             positionY = e.Y;
 
             pintar = true;
+        }
+
+        private void pictureBox1_Resize(object sender, EventArgs e)
+        {
+            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            g = Graphics.FromImage(bitmap);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            pictureBox1.Image = bitmap;
+            drawing();
+
+        }
+
+        private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            DialogResult result = MessageBox.Show("¿Está seguro que desea borrar todo?", "Borrar", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                g = Graphics.FromImage(bitmap);
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                pictureBox1.Image = bitmap;
+                g.Clear(Color.White);
+                rectangulos.Clear();
+                lineas.Clear();
+            }
+
+
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
