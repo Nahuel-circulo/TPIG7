@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +18,7 @@ namespace TPIG7
         private List<Forma> rectangulos = new List<Forma>();
         private List<Line> lineas = new List<Line>();
 
-        //posisiones respectivas del maus en el grafico
+        //posisiones respectivas del mouse en el grafico
         private int positionX, arrowStartX, arrowEndX = 0;
         private int positionY, arrowStartY, arrowEndY = 0;
 
@@ -36,10 +37,10 @@ namespace TPIG7
 
         string form = "rectangle";
 
-        //variable que define el brush( no tengo idea de que pingo es un brush ero lo defino aca )
+        //variable que define el brush
         private Brush brush;
 
-        private Font font;
+        //private Font font;
 
         private Bitmap bitmap;
 
@@ -74,6 +75,8 @@ namespace TPIG7
             pen.EndCap = LineCap.ArrowAnchor;
             pen.StartCap = LineCap.RoundAnchor;
         }
+
+        //exportar como imagen
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -104,6 +107,7 @@ namespace TPIG7
             }
         }
 
+        // abrir imagen
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -151,6 +155,7 @@ namespace TPIG7
             pintar = true;
         }
 
+        // redimensiona el bitmap
         private void pictureBox1_Resize(object sender, EventArgs e)
         {
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -161,10 +166,11 @@ namespace TPIG7
 
         }
 
+        // borrar todo y comenzar un diagrama nuevo
         private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            DialogResult result = MessageBox.Show("¿Está seguro que desea borrar todo?", "Borrar", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("¿Está seguro que desea descartar los cambios?", "Borrar", MessageBoxButtons.YesNo);
 
             if (result == DialogResult.Yes)
             {
@@ -179,6 +185,23 @@ namespace TPIG7
 
 
         }
+
+        // exporta los rectangulos a JSON falta hacer las lineas
+        private void guardarToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "JSON |*.json";
+            saveFileDialog1.Title = "Guardar como";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                string json = JsonConvert.SerializeObject(rectangulos);
+                System.IO.File.WriteAllText(saveFileDialog1.FileName, json);
+            }
+        }
+        
+
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
