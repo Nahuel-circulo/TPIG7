@@ -11,16 +11,16 @@ namespace TPIG7
     {
 
         private int arrowPositionXStart, arrowPositionXEnd, arrowPostionYStart, arrowPostionYEnd;
-        
+
         private System.Drawing.Pen lapiz;
-        
-        public Line(int arrowPositionXStart, int arrowPositionXEnd, int arrowPostionYStart, int arrowPostionYEnd, Pen lapiz)
+
+        public Line(int arrowPositionXStart, int arrowPositionXEnd, int arrowPostionYStart, int arrowPostionYEnd,Pen pen)
         {
             this.ArrowPositionXStart = arrowPositionXStart;
             this.ArrowPositionXEnd = arrowPositionXEnd;
             this.ArrowPostionYStart = arrowPostionYStart;
             this.ArrowPostionYEnd = arrowPostionYEnd;
-            this.Lapiz = lapiz;
+            this.Lapiz = (Pen)pen.Clone();
         }
 
         public int ArrowPositionXStart { get => arrowPositionXStart; set => arrowPositionXStart = value; }
@@ -28,5 +28,13 @@ namespace TPIG7
         public int ArrowPostionYStart { get => arrowPostionYStart; set => arrowPostionYStart = value; }
         public int ArrowPostionYEnd { get => arrowPostionYEnd; set => arrowPostionYEnd = value; }
         public Pen Lapiz { get => lapiz; set => lapiz = value; }
+
+        public void dibujar(Graphics g)
+        {
+            g.DrawLine(lapiz, arrowPositionXStart,
+               arrowPostionYStart,
+               arrowPositionXEnd,
+               arrowPostionYEnd);
+        }
     }
 }

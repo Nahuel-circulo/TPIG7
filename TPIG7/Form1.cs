@@ -72,6 +72,12 @@ namespace TPIG7
             form = "circle";
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            form = "line";
+            pen.EndCap = LineCap.ArrowAnchor;
+            pen.StartCap = LineCap.RoundAnchor;
+        }
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -124,12 +130,6 @@ namespace TPIG7
             this.Close();
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            form = "line";
-            pen.EndCap = LineCap.ArrowAnchor;
-            pen.StartCap = LineCap.Flat;
-        }
 
 
         //constructor
@@ -141,6 +141,7 @@ namespace TPIG7
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
             g = Graphics.FromImage(bitmap);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             g.Clear(Color.White);
             pictureBox1.Image = bitmap;
         }
@@ -194,7 +195,7 @@ namespace TPIG7
                     e.Y);
                 }
 
-                pictureBox1.Refresh();
+                drawing();
 
             }
 
@@ -203,10 +204,11 @@ namespace TPIG7
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
 
+            pintar = false;
             arrowEndX = e.X;
             arrowEndY = e.Y;
 
-            
+
             if (form == "rectangle")
             {
                 //g.DrawRectangle(pen, rect);
@@ -227,70 +229,38 @@ namespace TPIG7
                 //arrowEndX,
                 //arrowEndY);
 
-                lineas.Add(new Line(arrowStartX, arrowStartY, arrowEndX, arrowEndY, pen));
+                lineas.Add(new Line(arrowStartX, arrowEndX, arrowStartY, arrowEndY, pen));
             }
 
-            pintar = false;
 
 
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-
-            //if (form == "rectangle")
-            //{
-            //    g.Clear(Color.White);
-            //    g.DrawRectangle(pen, rect);
-            //    rectangulos.Add(new Forma("rectangle", rect));
-            //}
-
-            //if (form == "circle")
-            //{
-            //    g.DrawEllipse(pen, rect);
-            //    rectangulos.Add(new Forma("circle", rect));
-            //}
-
-            //if (form == "line")
-            //{
-            //    g.DrawLine(pen,
-            //    arrowStartX,
-            //    arrowStartY,
-            //    arrowEndX,
-            //    arrowEndY);
-
-            //    lineas.Add(new Line(arrowStartX, arrowStartY, arrowEndX, arrowEndY,pen));
-            //}
-
-
             drawing();
         }
 
         private void drawing()
         {
-            g.Clear(Color.White);
-            foreach (Forma item in rectangulos)
+
+            foreach (Forma formas in rectangulos)
             {
-                if (item.Type == "rectangle")
+                if (formas.Type == "rectangle")
                 {
-                    g.DrawRectangle(pen, item.Form);
+                    g.DrawRectangle(pen, formas.Form);
                 }
                 else
                 {
-                    
-                g.DrawEllipse(pen, item.Form);
+                    g.DrawEllipse(pen, formas.Form);
                 }
             }
 
             foreach (Line item in lineas)
             {
-                g.DrawLine(item.Lapiz,
-                item.ArrowPositionXStart,
-                item.ArrowPostionYStart,
-                item.ArrowPositionXEnd,
-                item.ArrowPostionYEnd);
+                item.dibujar(g);
             }
-            
+            pictureBox1.Refresh();
 
         }
 
