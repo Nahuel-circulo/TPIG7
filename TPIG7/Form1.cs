@@ -58,6 +58,7 @@ namespace TPIG7
             InitializeComponent();
             
             brush = new SolidBrush(Color.Black);
+            font = new Font("Arial", 12);
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
@@ -199,20 +200,12 @@ namespace TPIG7
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             pintar = false;
-            
-           // g.DrawRectangle(pen, rect);
-            //StringBuilder sb = new StringBuilder();
-            //do
-            //{
-            //    sb.Append(caracter);
-
-            //    g.DrawString(sb.ToString(), font, brush, rect.X, rect.Y);
-
-            //} while (escrito);
+            Texto t = new Texto("verga",font,brush);
+           
             
             if(dibujo == 0 || dibujo == 1) 
             { 
-                rectangulos.Add(new Forma2D(rect, dibujo));
+                rectangulos.Add(new Forma2D(rect, dibujo,t));
             }
             else
             {

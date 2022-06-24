@@ -22,9 +22,13 @@ namespace TPIG7
         //  public int Tipo { get => tipo; set => tipo = value; }
         //public Point PuntoDeEscritura { get => puntoDeEscritura; }
 
-         void Dibujar(Graphics g, Pen p);
-        
-        
-       
+        void Dibujar(Graphics g, Pen p);
+       // void DibujarTexto(Graphics g, Pen p, string texto);
+
+
+
+
+
+
     }
 }

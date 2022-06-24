@@ -39,6 +39,11 @@ namespace TPIG7
                 arrowEndX,
                 arrowEndY);
         }
+
+        public void DibujarTexto(Graphics g, Pen p,string texto)
+        {
+
+        }
     }
 
 }

@@ -12,6 +12,7 @@ namespace TPIG7
     {
         private int tipo;
         private Rectangle rectangle;
+        private Texto texto;
 
 
         public Forma2D(Rectangle rectangle, int tipo)
@@ -22,7 +23,13 @@ namespace TPIG7
            
         }
 
+        public Forma2D(Rectangle rectangle, int tipo,Texto texto)
+        {
+            this.texto = texto;
+            this.Rectangle = rectangle;
+            this.Tipo = tipo;
 
+        }
 
 
         //public Forma2D(Rectangle rectangle, int tipo, string contenido, Font font)
@@ -39,6 +46,7 @@ namespace TPIG7
 
         public Rectangle Rectangle { get => rectangle; set => rectangle = value; }
         public int Tipo { get => tipo; set => tipo = value; }
+        internal Texto Texto { get => texto; set => texto = value; }
 
         public void Dibujar(Graphics g, Pen p)
         {
@@ -55,10 +63,20 @@ namespace TPIG7
 
 
             }
+            if(texto != null)
+            {
+                texto.DibujarTexto(g, p, rectangle);
+            }
         }
-     
+        public void DibujarTexto(Graphics g, Pen p, string texto)
+        {
+             
+        }
 
-        
+
+
+
+
     }
 }
  
