@@ -179,6 +179,90 @@ namespace TPIG7
             
         }
 
+        private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            DialogResult result = MessageBox.Show("¿Está seguro que desea descartar los cambios?", "Borrar", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                g = Graphics.FromImage(bitmap);
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                pictureBox1.Image = bitmap;
+                g.Clear(Color.White);
+                rectangulos.Clear();
+
+            }
+        }
+
+        private void imagenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "JPeg |*.jpg|BMP |*.bmp";
+            saveFileDialog1.Title = "Guardar como";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+
+                System.IO.FileStream fs =
+                   (System.IO.FileStream)saveFileDialog1.OpenFile();
+
+                switch (saveFileDialog1.FilterIndex)
+                {
+                    case 1:
+                        this.pictureBox1.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+
+                    case 2:
+                        this.pictureBox1.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                }
+
+                fs.Close();
+            }
+        }
+
+        private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "JSON |*.json";
+            saveFileDialog1.Title = "Guardar como";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                string json = JsonConvert.SerializeObject(rectangulos);
+                System.IO.File.WriteAllText(saveFileDialog1.FileName, json);
+            }
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "JPeg |*.jpg|BMP |*.bmp";
+            openFileDialog1.Title = "Abrir imagen";
+            openFileDialog1.ShowDialog();
+
+            if (openFileDialog1.FileName != "")
+            {
+                bitmap = new Bitmap(openFileDialog1.FileName);
+                pictureBox1.Image = bitmap;
+                pictureBox1.Refresh();
+            }
+        }
+
+
+
 
         //funcion qe se encargar de setear cosas cuando se suelta el boton del maus 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -251,37 +335,10 @@ namespace TPIG7
             arrowStartY = e.Y;
         }
 
-        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "JPeg |*.jpg|BMP |*.bmp";
-            saveFileDialog1.Title = "Guardar como";
-            saveFileDialog1.ShowDialog();
+      
 
-            if (saveFileDialog1.FileName != "")
-            {
-                // Save the Image via a FileStream created by the OpenFile method.
-                System.IO.FileStream fs =
-                   (System.IO.FileStream)saveFileDialog1.OpenFile();
-                // Saves the Image in the appropriate ImageFormat based upon the
-                // File type selected in the dialog box.
-                // NOTE that the FilterIndex property is one-based.
-                switch (saveFileDialog1.FilterIndex)
-                {
-                    case 1:
-                        this.pictureBox1.Image.Save(fs,
-                           System.Drawing.Imaging.ImageFormat.Jpeg);
-                        break;
 
-                    case 2:
-                        this.pictureBox1.Image.Save(fs,
-                           System.Drawing.Imaging.ImageFormat.Bmp);
-                        break;
-                }
 
-                fs.Close();
-            }
-        }
 
 
 
@@ -338,71 +395,7 @@ namespace TPIG7
 
 
 
-
-
-
-        //private void panel2_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    arrowStartX = e.X;
-        //    arrowStartY = e.Y;
-
-        //    label1.Text = "Arrow Start: " + arrowStartX + ", " + arrowStartY;
-        //    pintar = true;
-        //}
-
-        //private void panel2_MouseMove(object sender, MouseEventArgs e)
-        //{
-
-        //    label2.Text = "Arrow End: " + e.X + ", " + e.Y;
-
-
-        //    if (pintar)
-        //    {
-
-        //        panel2.Refresh();
-        //        pen.StartCap = LineCap.RoundAnchor;
-        //        pen.EndCap = LineCap.ArrowAnchor;
-        //        using (Graphics g = this.panel2.CreateGraphics())
-        //        {
-
-        //            g.DrawLine(pen, arrowStartX,
-        //            arrowStartY,
-        //            e.X,
-        //            e.Y);
-
-
-        //        }
-        //        panel1.Invalidate();
-
-        //    }
-
-        //}
-
-        //private void panel2_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    arrowEndX = e.X;
-        //    arrowEndY = e.Y;
-
-        //    pintar = false;
-        //    panel2.Refresh();
-        //}
-
-        //private void panel2_Paint(object sender, PaintEventArgs e)
-        //{
-        //    using (Graphics g = this.panel2.CreateGraphics())
-        //    {
-        //        Pen pen = new Pen(Color.Black, 5);
-        //        pen.StartCap = LineCap.RoundAnchor;
-        //        pen.EndCap = LineCap.ArrowAnchor;
-
-        //        g.DrawLine(pen, arrowStartX,
-        //        arrowStartY,
-        //        arrowEndX,
-        //        arrowEndY);
-
-        //        pen.Dispose();
-
-        //    }
+   
 
 
 
