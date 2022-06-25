@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,9 +24,9 @@ namespace TPIG7
         private int y,w, arrowStartY, arrowEndY = 0;
 
         //lapis para dibujar cosas en el grafico , contienen toda la informacion respectiva de un lapis XD
-        private Pen pen = new Pen(Color.Black, 2);
+        private Pen pen = new Pen(Color.Black, 5);
 
-        // rectangulo auviliar usado para el dibujo
+        // rectangulo auxiliar usado para el dibujo
         private Rectangle rect;
 
         // el grafico :v
@@ -34,11 +35,8 @@ namespace TPIG7
         // variable que se encarga de manejar en que momento se dibuja algo o no 
         private bool pintar = false;
 
-        // enumeracion que define los tipos de dibujos que se pueden hacer 
-        private enum dibujos { cuadrado, circulo , linea, flechaDoble,flecha }
 
-        //variable que define que dibujo se esta por hacer en el momento
-        private int dibujo;
+        string form = "rectangle";
 
         //variable que define el brush( no tengo idea de que pingo es un brush pero lo defino aca )
         private Brush brush;
@@ -56,17 +54,7 @@ namespace TPIG7
 
         //constructor
         public Form1()
-        {
-            InitializeComponent();
-            
-            brush = new SolidBrush(Color.Black);
-            font = new Font("Arial", 12);
-            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            g = Graphics.FromImage(bitmap);
-            g.Clear(Color.White);
-            pictureBox1.Image = bitmap;
-            rectangulos = new List<Forma>();
-        }
+        
 
         // funciones que setean cosas dependiendo de la erramienta que se use 
         private void button1_Click(object sender, EventArgs e)
@@ -91,11 +79,25 @@ namespace TPIG7
 
         }
 
+        //exportar como imagen
+        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dibujo= 2;
+            pen.EndCap = LineCap.Flat;
+            pen.StartCap = LineCap.Flat;
+            saveFileDialog1.ShowDialog();
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
             dibujo = 3;
             
-            pen.EndCap = LineCap.ArrowAnchor;
             pen.StartCap = LineCap.Flat;
            
         }
@@ -104,10 +106,10 @@ namespace TPIG7
         {
             dibujo = 4; 
             pen.EndCap = LineCap.ArrowAnchor;
-            pen.StartCap = LineCap.ArrowAnchor;
+        }
         }
 
-        //funcion que registra la pocicon de el maus al momento de precionar el boton del maus, valga la redundancia
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             x = e.X;
@@ -130,9 +132,9 @@ namespace TPIG7
                         previewCirculos(e);
                         break;
                     case 2:
-                        previewLinea(e);
-                        break;
-                    case 3:
+        {
+        }
+        }
                         previewLinea(e);
                         break;
                     case 4:
@@ -161,17 +163,18 @@ namespace TPIG7
             h = e.X - x;
             w = e.Y - y;
             rect = new Rectangle(x, y, h, w);
-            g.DrawEllipse(pen, rect);
+        //        Pen pen = new Pen(Color.Black, 5);
             dibujar();
-            
-        }
+        //        g.DrawRectangle(pen, rect);
+        //}
         private void previewLinea(MouseEventArgs e)
-        {
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e) { 
+
             g.Clear(Color.White);
-            
-            g.DrawLine(pen, x, y, e.X, e.Y);
+            pintar = true;
+        }
             dibujar();
-            
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
 
         }
 
@@ -213,30 +216,30 @@ namespace TPIG7
                    (System.IO.FileStream)saveFileDialog1.OpenFile();
 
                 switch (saveFileDialog1.FilterIndex)
-                {
+            }
                     case 1:
                         this.pictureBox1.Image.Save(fs,
                            System.Drawing.Imaging.ImageFormat.Jpeg);
                         break;
 
-                    case 2:
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
                         this.pictureBox1.Image.Save(fs,
                            System.Drawing.Imaging.ImageFormat.Bmp);
                         break;
                 }
-
+            pictureBox1.Refresh();
                 fs.Close();
             }
         }
 
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            y = 0;
+        }
             saveFileDialog1.Filter = "JSON |*.json";
-            saveFileDialog1.Title = "Guardar como";
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
             saveFileDialog1.ShowDialog();
 
-            if (saveFileDialog1.FileName != "")
+        {
             {
                 string json = JsonConvert.SerializeObject(rectangulos);
                 System.IO.File.WriteAllText(saveFileDialog1.FileName, json);
@@ -245,13 +248,14 @@ namespace TPIG7
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            foreach (Forma item in rectangulos)
         }
 
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "JPeg |*.jpg|BMP |*.bmp";
+               // dibujar(item);
+            }
+        }
+        private string botonArrastrando = "";
             openFileDialog1.Title = "Abrir imagen";
             openFileDialog1.ShowDialog();
 
@@ -266,7 +270,7 @@ namespace TPIG7
         private void Form1_Load(object sender, EventArgs e)
         {
             
-        }
+        //}
 
 
 
@@ -363,49 +367,96 @@ namespace TPIG7
 
 
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //Graphics golfgti6;
+            //golfgti6 = pictureBox2.CreateGraphics();
+            //Pen lapiz = new Pen(Color.Black, 5);
+            //golfgti6.DrawEllipse(lapiz, 20, 20, 250, 200);
+            
+
+            rc = new ResizableControl(pictureBox2);
+        }
 
 
 
 
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (pintar)
+            {
+
+                g.Clear(Color.White);
+
+                if (form == "rectangle" || form == "circle")
+                {
+
+                    rect = new Rectangle(
+                    Math.Min(e.X, positionX),
+                    Math.Min(e.Y, positionY),
+                    (e.X - positionX),
+                    (e.Y - positionY));
+                }
+
+                if (form == "rectangle")
+                {
+                    g.DrawRectangle(pen, rect);
+                }
+
+                if (form == "circle")
+                {
+                    g.DrawEllipse(pen, rect);
+                }
+        //    arrowStartY = e.Y;
+        //}
+        //{
+        //    label2.Text = "Arrow End: " + e.X + ", " + e.Y;
+
+        }
+        //    {
+        //        {
+
+
+            if (form == "rectangle")
+            {
+                //g.DrawRectangle(pen, rect);
+                rectangulos.Add(new Forma("rectangle", rect));
+            }
+        //        panel1.Invalidate();
+        //    }
+        //}
+
+
+        //        pen.EndCap = LineCap.ArrowAnchor;
+        //        arrowEndY);
+                lineas.Add(new Line(arrowStartX, arrowEndX, arrowStartY, arrowEndY, pen));
+            }
 
 
 
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            drawing();
+        }
+
+
+       
+        private void drawing()
+        {
 
 
 
+        
 
+            foreach (Line item in lineas)
+            {
+                item.dibujar(g);
+            }
+            pictureBox1.Refresh();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
+        }
 
     }
 }
