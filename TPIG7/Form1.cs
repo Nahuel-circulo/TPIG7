@@ -130,6 +130,8 @@ namespace TPIG7
 
 
 
+        ResizableControl rc;
+
         //constructor
         public Form1()
         {
@@ -200,7 +202,60 @@ namespace TPIG7
                 System.IO.File.WriteAllText(saveFileDialog1.FileName, json);
             }
         }
-        
+        private string botonArrastrando = "";
+
+        private void crearNuevaMesa()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Button btn = new Button();
+                btn.Name = "btn" + i;
+                btn.Height = 40;
+                btn.Width = 300;
+                btn.BackColor = Color.Red;
+
+                btn.Location = new Point(200, 200);
+                btn.Text = "SOY UNA NUEVA MESA";
+                btn.Font = new Font("Georgia", 16);
+
+                btn.MouseMove += new MouseEventHandler(btn_MouseMove);
+                btn.MouseDown += new MouseEventHandler(btn_MouseDown);
+                btn.MouseUp += new MouseEventHandler(btn_MouseUp);
+
+                Controls.Add(btn);
+            }
+        }
+        private void btn_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point l = this.PointToClient(Cursor.Position);
+            if (((Button)sender).Name == botonArrastrando)
+            {
+                ((Button)sender).Location = l;
+            }
+        }
+
+        private void btn_MouseDown(object sender, MouseEventArgs e)
+        {
+            botonArrastrando = ((Button)sender).Name;
+        }
+
+        private void btn_MouseUp(object sender, MouseEventArgs e)
+        {
+            botonArrastrando = "";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //Graphics golfgti6;
+            //golfgti6 = pictureBox2.CreateGraphics();
+            //Pen lapiz = new Pen(Color.Black, 5);
+            //golfgti6.DrawEllipse(lapiz, 20, 20, 250, 200);
+            
+
+            rc = new ResizableControl(pictureBox2);
+        }
+
+
 
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -287,6 +342,8 @@ namespace TPIG7
             drawing();
         }
 
+
+       
         private void drawing()
         {
 
