@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -261,6 +263,10 @@ namespace TPIG7
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
 
 
 
