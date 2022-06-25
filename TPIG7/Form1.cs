@@ -176,23 +176,7 @@ namespace TPIG7
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (ecribiendo)
-            //{
-                StringBuilder stringBuilder = new StringBuilder(label1.Text);
-                KeysConverter converter = new KeysConverter();
-
-                if (e.KeyCode == Keys.Back )
-                {
-                    stringBuilder.Remove(stringBuilder.Length - 1, 1);
-                }
-                else
-                {
-                    stringBuilder.Append(converter.ConvertToString(e.KeyCode));
-                }
-
-                label1.Text = stringBuilder.ToString();
-                label1.Refresh();
-            //}
+            
         }
 
 
@@ -200,9 +184,11 @@ namespace TPIG7
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             pintar = false;
-            Texto t = new Texto("verga",font,brush);
            
-            
+            Form2 form2 = new Form2();
+            form2.ShowDialog(); 
+
+            Texto t = new Texto(form2.Texto,font,brush);
             if(dibujo == 0 || dibujo == 1) 
             { 
                 rectangulos.Add(new Forma2D(rect, dibujo,t));
@@ -211,8 +197,12 @@ namespace TPIG7
             {
                 rectangulos.Add(new Forma1D(pen, x, y, e.X, e.Y));
             }
-            dibujar();
+           
             
+           
+            
+            
+            dibujar();
             x = 0;
             y = 0;
           

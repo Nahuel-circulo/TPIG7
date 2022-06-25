@@ -12,32 +12,19 @@ namespace TPIG7
 {
     public partial class Form2 : Form
     {
-        private string 
-        
+        private string texto;
+
+        public string Texto { get => texto; set => texto = value; }
+
         public Form2()
         {
             InitializeComponent();
-           
+            textBox1.Text = texto;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
-
-        }
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
+            texto = textBox1.Text;
         }
     }
 }
