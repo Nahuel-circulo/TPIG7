@@ -47,7 +47,7 @@ namespace TPIG7
         //variable que define el bitmap( no tengo idea de que pingo es un bitmap pero lo defino aca )
         private Bitmap bitmap;
 
-        
+        private int hola;
 
         bool ecribiendo = false;
 
