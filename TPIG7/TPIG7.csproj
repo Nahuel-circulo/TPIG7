@@ -66,6 +66,9 @@
     </Compile>
     <Compile Include="Forma.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="MyForma.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResizableControl.cs" />
