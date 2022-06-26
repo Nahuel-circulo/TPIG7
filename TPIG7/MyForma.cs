@@ -17,7 +17,7 @@ namespace TPIG7
         private int borderSize = 3;
         private string tipo = "circle";
 
-        public MyForma(int width, int height, string tipe)
+        public MyForma(int width, int height, string tipe ,ContextMenuStrip c)
         {
             tipo = tipe;
             //if (tipe == "circle")
@@ -35,6 +35,8 @@ namespace TPIG7
             TextBox text = new TextBox();
             text.Text = "";
             text.Multiline = true;
+            this.ContextMenuStrip = c;
+
 
             text.Multiline = true;
             if (tipe == "circle")
@@ -101,7 +103,7 @@ namespace TPIG7
             var bordeRectangulo = Rectangle.Inflate(contornoRectanfulo, -borderSize, -borderSize);
             var smoothSize = borderSize > 0 ? borderSize * 3 : 1;
             using (var pathRegion = new GraphicsPath())
-            using (var penSmooth = new Pen(this.Parent.BackColor, smoothSize))
+            using (var penSmooth = new Pen(Color.Transparent, smoothSize))
             using (var penBorder = new Pen(Color.Black, BorderSize))
             {
                 penBorder.DashStyle = DashStyle.Solid;
@@ -127,6 +129,13 @@ namespace TPIG7
                 }
             }
 
+        }
+
+        public Forma CreateRectangulo()
+        {
+            Rectangle r = new Rectangle(Location, Size);
+            Forma forma = new Forma(Tipo, r);
+            return forma;
         }
     }
 }

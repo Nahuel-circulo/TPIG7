@@ -255,6 +255,29 @@ namespace TPIG7
             pintar = true;
         }
 
+        private void editarToolStripMenuItem1_MouseDown(object sender, MouseEventArgs e)
+        {
+            foreach(Forma forma in rectangulos)
+            {
+                int YS = forma.Form.Y;
+                int XS = forma.Form.X;
+                int YI = forma.Form.Y- forma.Form.Height;
+                int XI = forma.Form.X- forma.Form.Width;
+                if ((e.Y<YS && e.Y >YI)&& (e.X < XS && e.X > XI))
+                {
+                    
+                    MyForma otro = forma.CombertirAContol(forma.Form.Width, forma.Form.Height,contextMenuStrip1);
+                    ResizableControl resizableControl = new ResizableControl(otro);
+                    pictureBox1.Controls.Add(otro);
+                    pictureBox1.Refresh();
+                }
+            }
+        }
+
+        
+
+     
+
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (pintar)
@@ -303,56 +326,60 @@ namespace TPIG7
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
 
-            pintar = false;
+            
             arrowEndX = e.X;
             arrowEndY = e.Y;
 
-
-            if (form == "rectangle")
+            if (pintar)
             {
-                //g.DrawRectangle(pen, rect);
-                rectangulos.Add(new Forma("rectangle", rect));
+                if (form == "rectangle")
+                {
+
+                    rectangulos.Add(new Forma("rectangle", rect));
 
 
-                    MyForma otro = new MyForma(rect.Width, rect.Height, form);
-                    otro.Location = new Point(rect.X, rect.Y);
+                    //MyForma otro = new MyForma(rect.Width, rect.Height, form);
+                    //otro.Location = new Point(rect.X, rect.Y);
 
-                    otro.Name = "myRectangle";
-                    otro.SizeMode = PictureBoxSizeMode.StretchImage;
-                    ResizableControl resizableControl = new ResizableControl(otro);
-                    pictureBox1.Controls.Add(otro);
-                g.Clear(Color.White);
-                pictureBox1.Refresh();
+                    //otro.Name = "myRectangle";
+                    //otro.SizeMode = PictureBoxSizeMode.StretchImage;
+                    //ResizableControl resizableControl = new ResizableControl(otro);
+                    //pictureBox1.Controls.Add(otro);
+                    //g.Clear(Color.White);
+                    pictureBox1.Refresh();
+                    g.DrawRectangle(pen, rect);
 
+                }
+
+                if (form == "circle")
+                {
+
+                    rectangulos.Add(new Forma("circle", rect));
+                    //MyForma otro = new MyForma(rect.Width, rect.Height, form);
+                    //otro.Location = new Point(rect.X, rect.Y);
+
+                    //otro.Name = "myRectangle";
+                    //otro.SizeMode = PictureBoxSizeMode.StretchImage;
+                    //ResizableControl resizableControl = new ResizableControl(otro);
+                    //pictureBox1.Controls.Add(otro);
+
+                    //g.Clear(Color.White);
+                    pictureBox1.Refresh();
+                    g.DrawEllipse(pen, rect);
+                }
+
+                if (form == "line")
+                {
+                    //g.DrawLine(pen,
+                    //arrowStartX,
+                    //arrowStartY,
+                    //arrowEndX,
+                    //arrowEndY);
+
+                    lineas.Add(new Line(arrowStartX, arrowEndX, arrowStartY, arrowEndY, pen));
+                }
             }
-
-            if (form == "circle")
-            {
-                //g.DrawEllipse(pen, rect);
-                rectangulos.Add(new Forma("circle", rect));
-                MyForma otro = new MyForma(rect.Width, rect.Height, form);
-                otro.Location = new Point(rect.X, rect.Y);
-
-                otro.Name = "myRectangle";
-                otro.SizeMode = PictureBoxSizeMode.StretchImage;
-                ResizableControl resizableControl = new ResizableControl(otro);
-                pictureBox1.Controls.Add(otro);
-
-                g.Clear(Color.White);
-                pictureBox1.Refresh();
-            }
-
-            if (form == "line")
-            {
-                //g.DrawLine(pen,
-                //arrowStartX,
-                //arrowStartY,
-                //arrowEndX,
-                //arrowEndY);
-
-                lineas.Add(new Line(arrowStartX, arrowEndX, arrowStartY, arrowEndY, pen));
-            }
-           
+            pintar = false;
 
         }
 
@@ -366,17 +393,17 @@ namespace TPIG7
         private void drawing()
         {
 
-            //foreach (Forma formas in rectangulos)
-            //{
-            //    if (formas.Type == "rectangle")
-            //    {
-            //        g.DrawRectangle(pen, formas.Form);
-            //    }
-            //    else
-            //    {
-            //        g.DrawEllipse(pen, formas.Form);
-            //    }
-            //}
+            foreach (Forma formas in rectangulos)
+            {
+                if (formas.Type == "rectangle")
+                {
+                    g.DrawRectangle(pen, formas.Form);
+                }
+                else
+                {
+                    g.DrawEllipse(pen, formas.Form);
+                }
+            }
 
             foreach (Line item in lineas)
             {
