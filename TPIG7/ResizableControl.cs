@@ -10,9 +10,10 @@ namespace TPIG7
 {
     internal class ResizableControl
     {
-        private Control withEventsField_mControl;
-        private Control MControl
+        public Control withEventsField_mControl;
+        public Control MControl
         {
+            
             get { return withEventsField_mControl; }
             set
             {
@@ -23,7 +24,9 @@ namespace TPIG7
                     withEventsField_mControl.MouseMove -= mControl_MouseMove;
                     withEventsField_mControl.MouseLeave -= mControl_MouseLeave;
                 }
+
                 withEventsField_mControl = value;
+
                 if (withEventsField_mControl != null)
                 {
                     withEventsField_mControl.MouseDown += mControl_MouseDown;
@@ -56,7 +59,7 @@ namespace TPIG7
 
         private void mControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
                 mMouseDown = true;
             }

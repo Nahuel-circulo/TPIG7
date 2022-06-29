@@ -16,31 +16,22 @@ namespace TPIG7
 
         private int borderSize = 3;
         private string tipo = "circle";
-
+        private TextBox text = new TextBox();
         public MyForma(int width, int height, string tipe)
         {
             tipo = tipe;
-            //if (tipe == "circle")
-            //{
-            //    this.Size = new Size(80, 80);
-            //}
-            //else
-            //{
-            //    this.Size = new Size(100, 60);
-            //}
+            this.Size = new Size(100, 60);
             this.BackColor = Color.Transparent;   
             this.Size = new Size(width, height);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             
-            TextBox text = new TextBox();
-            text.Text = "";
-            text.Multiline = true;
 
+            text.Text = "";
             text.Multiline = true;
             if (tipe == "circle")
             {
-                text.Width = (this.Size.Width - 20) - ((int)(this.Size.Width * 0.25));
-                text.Height = (this.Size.Height - 20) - ((int)(this.Size.Height * 0.25));
+                text.Width = (this.Size.Width - 20) - ((int)(this.Size.Width * 0.3));
+                text.Height = (this.Size.Height - 20) - ((int)(this.Size.Height * 0.3));
                 text.Location = new Point((int)(this.Size.Width * 0.2), (int)(this.Size.Height * 0.2));
                 text.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
             }
@@ -51,8 +42,10 @@ namespace TPIG7
                 text.Height = this.Size.Height - 20;
                 text.Anchor = AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Left;
             }
-            //text.BorderStyle = BorderStyle.None;
+            text.BorderStyle = BorderStyle.None;
+
             text.TextAlign = HorizontalAlignment.Center;
+            ResizableControl tranformToResizable = new ResizableControl(text);
             this.Controls.Add(text);
         }
 
@@ -88,6 +81,12 @@ namespace TPIG7
         {
             base.OnResize(e);
             this.Size = new Size(this.Width, this.Height);
+            if (this.tipo == "circle")
+            {
+                this.text.Width = (this.Size.Width - 20) - ((int)(this.Size.Width * 0.25));
+                this.text.Height = (this.Size.Height - 20) - ((int)(this.Size.Height * 0.25));
+                this.text.Location = new Point((int)(this.Size.Width * 0.2), (int)(this.Size.Height * 0.2));
+            }
         }
 
 
@@ -97,22 +96,23 @@ namespace TPIG7
             base.OnPaint(pe);
 
             var graphics = pe.Graphics;
-            var contornoRectanfulo = Rectangle.Inflate(this.ClientRectangle, -1, -1);
-            var bordeRectangulo = Rectangle.Inflate(contornoRectanfulo, -borderSize, -borderSize);
+            var contornoRectangulo = Rectangle.Inflate(this.ClientRectangle, -1, -1);
+            var bordeRectangulo = Rectangle.Inflate(contornoRectangulo, -borderSize, -borderSize);
+
             var smoothSize = borderSize > 0 ? borderSize * 3 : 1;
             using (var pathRegion = new GraphicsPath())
-            using (var penSmooth = new Pen(this.Parent.BackColor, smoothSize))
+            using (var penSmooth = new Pen(Color.Transparent, smoothSize))
             using (var penBorder = new Pen(Color.Black, BorderSize))
             {
                 penBorder.DashStyle = DashStyle.Solid;
                 penBorder.DashCap = DashCap.Flat;
-                pathRegion.AddRectangle(contornoRectanfulo);
+                pathRegion.AddRectangle(contornoRectangulo);
                 this.Region = new Region(pathRegion);
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
 
                 // dbujado
-                graphics.DrawRectangle(penSmooth, contornoRectanfulo);
+                //graphics.DrawRectangle(penSmooth, contornoRectangulo);
 
                 if (borderSize > 0)
                 {

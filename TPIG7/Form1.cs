@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,7 +19,7 @@ namespace TPIG7
     public partial class Form1 : Form
     {
         // lista que se encarga de manejar todo lo que se dibuja en el grafico (graphics)
-        private List<Forma> rectangulos = new List<Forma>();
+
         private List<Line> lineas = new List<Line>();
 
         //posisiones respectivas del mouse en el grafico
@@ -53,6 +54,7 @@ namespace TPIG7
             form = "line";
             pen.EndCap = LineCap.Flat;
             pen.StartCap = LineCap.Flat;
+            pictureBox1.Cursor = Cursors.Cross;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -94,20 +96,15 @@ namespace TPIG7
             if (saveFileDialog1.FileName != "")
             {
 
+                Bitmap bitmap = new Bitmap(pictureBox1.Image);
                 FileStream fs = (FileStream)saveFileDialog1.OpenFile();
 
-                Rectangle bounds = pictureBox1.Bounds;
-                Point pt = pictureBox1.PointToScreen(bounds.Location);
-                Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height);
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
-                    g.CopyFromScreen(new Point(pt.X - pictureBox1.Location.X, pt.Y - pictureBox1.Location.Y), Point.Empty, bounds.Size);
-                }
+                DrawToBitmap(bitmap, pictureBox1.ClientRectangle);
                 switch (saveFileDialog1.FilterIndex)
                 {
                     case 1:
-                        //this.pictureBox1.Image.Save(fs,
-                        //   System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                        //this.pictureBox1.Image.Save(fs,ImageFormat.Jpeg);
                         bitmap.Save(fs, ImageFormat.Jpeg);
                         break;
 
@@ -123,18 +120,6 @@ namespace TPIG7
 
 
 
-
-        private void capture(Control ctrl, string fileName)
-        {
-            Rectangle bounds = ctrl.Bounds;
-            Point pt = ctrl.PointToScreen(bounds.Location);
-            Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height);
-            using (Graphics g = Graphics.FromImage(bitmap))
-            {
-                g.CopyFromScreen(new Point(pt.X - ctrl.Location.X, pt.Y - ctrl.Location.Y), Point.Empty, bounds.Size);
-            }
-            bitmap.Save(fileName, ImageFormat.Png);
-        }
 
 
         // abrir imagen
@@ -160,8 +145,6 @@ namespace TPIG7
 
 
 
-        ResizableControl rc;
-
         //constructor
         public Form1()
         {
@@ -174,19 +157,25 @@ namespace TPIG7
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.Clear(Color.White);
             pictureBox1.Image = bitmap;
+
+
         }
 
 
- 
+
 
         // redimensiona el bitmap
         private void pictureBox1_Resize(object sender, EventArgs e)
         {
-            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            g = Graphics.FromImage(bitmap);
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            pictureBox1.Image = bitmap;
-            drawing();
+            if (pictureBox1.Width > 0 || pictureBox1.Height > 0)
+            {
+
+                bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                g = Graphics.FromImage(bitmap);
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                pictureBox1.Image = bitmap;
+                drawing();
+            }
 
         }
 
@@ -203,7 +192,6 @@ namespace TPIG7
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 pictureBox1.Image = bitmap;
                 g.Clear(Color.White);
-                rectangulos.Clear();
                 lineas.Clear();
             }
 
@@ -220,8 +208,10 @@ namespace TPIG7
 
             if (saveFileDialog1.FileName != "")
             {
-                string json = JsonConvert.SerializeObject(rectangulos);
-                System.IO.File.WriteAllText(saveFileDialog1.FileName, json);
+                // No Funciona
+
+                //string json = JsonConvert.SerializeObject(formasASerializar);
+                //System.IO.File.WriteAllText(saveFileDialog1.FileName, json);
             }
         }
 
@@ -232,6 +222,7 @@ namespace TPIG7
 
         }
 
+        public bool lineIsOver = false;
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -240,27 +231,38 @@ namespace TPIG7
             positionX = e.X;
             positionY = e.Y;
 
-            //if (form == "rectangle" || form == "circle")
-            //{
-
-            //MyForma otro = new MyForma(100,60,form);
-            //otro.Location = new Point(arrowStartX, arrowStartY);
-
-            //otro.Name = "myForma2";
-            //otro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            //ResizableControl resizableControl = new ResizableControl(otro);
-
-            //pictureBox1.Controls.Add(otro);
-            //}
             pintar = true;
+
+
         }
 
+        public bool moving = false;
+        private void checkArrowPoint(Line linea, MouseEventArgs e)
+        {
+            if (((linea.ArrowPositionXStart + 3) >= e.X && e.X >= (linea.ArrowPositionXStart - 3))
+                        &&
+                        ((linea.ArrowPositionYStart + 3) >= e.Y && e.Y >= (linea.ArrowPositionYStart - 3))
+                        ||
+                        ((linea.ArrowPositionXEnd + 3) >= e.X && e.X >= (linea.ArrowPositionXEnd - 3))
+                        &&
+                        ((linea.ArrowPositionYEnd + 3) >= e.Y && e.Y >= (linea.ArrowPositionYEnd - 3)))
+            {
+                pictureBox1.Cursor = Cursors.Hand;
+                lineIsOver = true;
+            }
+            else
+            {
+                pictureBox1.Cursor = Cursors.Cross;
+                lineIsOver = false;
+            }
+
+        }
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (pintar)
             {
 
-                
+
                 g.Clear(Color.White);
 
                 if (form == "rectangle" || form == "circle")
@@ -297,9 +299,17 @@ namespace TPIG7
                 drawing();
 
             }
+            else
+            {
+                foreach (var linea in lineas)
+                {
+                    checkArrowPoint(linea, e);
+                }
+            }
 
         }
 
+        private List<MyForma> formasASerializar = new List<MyForma>();
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
 
@@ -310,26 +320,29 @@ namespace TPIG7
 
             if (form == "rectangle")
             {
-                //g.DrawRectangle(pen, rect);
-                rectangulos.Add(new Forma("rectangle", rect));
 
 
-                    MyForma otro = new MyForma(rect.Width, rect.Height, form);
-                    otro.Location = new Point(rect.X, rect.Y);
+                MyForma otro = new MyForma(rect.Width, rect.Height, form);
+                otro.Location = new Point(rect.X, rect.Y);
 
-                    otro.Name = "myRectangle";
-                    otro.SizeMode = PictureBoxSizeMode.StretchImage;
-                    ResizableControl resizableControl = new ResizableControl(otro);
-                    pictureBox1.Controls.Add(otro);
+                otro.Name = "myRectangle";
+                otro.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                ResizableControl anotherControl = new ResizableControl(otro);
+
+                formasASerializar.Add(otro);
+
+                pictureBox1.Controls.Add(otro);
+
                 g.Clear(Color.White);
                 pictureBox1.Refresh();
 
             }
 
+
             if (form == "circle")
             {
-                //g.DrawEllipse(pen, rect);
-                rectangulos.Add(new Forma("circle", rect));
+
                 MyForma otro = new MyForma(rect.Width, rect.Height, form);
                 otro.Location = new Point(rect.X, rect.Y);
 
@@ -341,6 +354,7 @@ namespace TPIG7
                 g.Clear(Color.White);
                 pictureBox1.Refresh();
             }
+            drawing();
 
             if (form == "line")
             {
@@ -352,7 +366,7 @@ namespace TPIG7
 
                 lineas.Add(new Line(arrowStartX, arrowEndX, arrowStartY, arrowEndY, pen));
             }
-           
+
 
         }
 
@@ -366,17 +380,6 @@ namespace TPIG7
         private void drawing()
         {
 
-            //foreach (Forma formas in rectangulos)
-            //{
-            //    if (formas.Type == "rectangle")
-            //    {
-            //        g.DrawRectangle(pen, formas.Form);
-            //    }
-            //    else
-            //    {
-            //        g.DrawEllipse(pen, formas.Form);
-            //    }
-            //}
 
             foreach (Line item in lineas)
             {

@@ -64,7 +64,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forma.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="MyForma.cs">
       <SubType>Component</SubType>
