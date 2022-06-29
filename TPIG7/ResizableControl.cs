@@ -10,38 +10,39 @@ namespace TPIG7
 {
     internal class ResizableControl
     {
-        public Control withEventsField_mControl;
+        public Control ControlConEventos;
         public Control MControl
         {
-            
-            get { return withEventsField_mControl; }
+            get { return ControlConEventos; }
             set
             {
-                if (withEventsField_mControl != null)
+                if (ControlConEventos != null)
                 {
-                    withEventsField_mControl.MouseDown -= mControl_MouseDown;
-                    withEventsField_mControl.MouseUp -= mControl_MouseUp;
-                    withEventsField_mControl.MouseMove -= mControl_MouseMove;
-                    withEventsField_mControl.MouseLeave -= mControl_MouseLeave;
+                    ControlConEventos.MouseDown -= mControl_MouseDown;
+                    ControlConEventos.MouseUp -= mControl_MouseUp;
+                    ControlConEventos.MouseMove -= mControl_MouseMove;
+                    ControlConEventos.MouseLeave -= mControl_MouseLeave;
                 }
 
-                withEventsField_mControl = value;
+                ControlConEventos = value;
 
-                if (withEventsField_mControl != null)
+                if (ControlConEventos != null)
                 {
-                    withEventsField_mControl.MouseDown += mControl_MouseDown;
-                    withEventsField_mControl.MouseUp += mControl_MouseUp;
-                    withEventsField_mControl.MouseMove += mControl_MouseMove;
-                    withEventsField_mControl.MouseLeave += mControl_MouseLeave;
+                    ControlConEventos.MouseDown += mControl_MouseDown;
+                    ControlConEventos.MouseUp += mControl_MouseUp;
+                    ControlConEventos.MouseMove += mControl_MouseMove;
+                    ControlConEventos.MouseLeave += mControl_MouseLeave;
                 }
             }
         }
-        private bool mMouseDown = false;
-        private EdgeEnum mEdge = EdgeEnum.None;
+
+        private bool mouseClick = false;
+
+        private EsquinasEnum esquinas = EsquinasEnum.None;
         private int mWidth = 4;
 
-        private bool mOutlineDrawn = false;
-        private enum EdgeEnum
+        private bool dibujoBorde = false;
+        private enum EsquinasEnum
         {
             None,
             Right,
@@ -57,78 +58,78 @@ namespace TPIG7
         }
 
 
-        private void mControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void mControl_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                mMouseDown = true;
+                mouseClick = true;
             }
         }
 
 
-        private void mControl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void mControl_MouseUp(object sender, MouseEventArgs e)
         {
-            mMouseDown = false;
+            mouseClick = false;
         }
 
 
-        private void mControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void mControl_MouseMove(object sender, MouseEventArgs e)
         {
-            Control c = (Control)sender;
-            Graphics g = c.CreateGraphics();
-            switch (mEdge)
+            Control control = (Control)sender;
+            Graphics g = control.CreateGraphics();
+            switch (esquinas)
             {
-                case EdgeEnum.TopLeft:
+                case EsquinasEnum.TopLeft:
                     g.FillRectangle(Brushes.Blue, 0, 0, mWidth * 4, mWidth * 4);
-                    mOutlineDrawn = true;
+                    dibujoBorde = true;
                     break;
-                case EdgeEnum.Left:
-                    g.FillRectangle(Brushes.Blue, 0, 0, mWidth, c.Height);
-                    mOutlineDrawn = true;
+                case EsquinasEnum.Left:
+                    g.FillRectangle(Brushes.Blue, 0, 0, mWidth, control.Height);
+                    dibujoBorde = true;
                     break;
-                case EdgeEnum.Right:
-                    g.FillRectangle(Brushes.Blue, c.Width - mWidth, 0, c.Width, c.Height);
-                    mOutlineDrawn = true;
+                case EsquinasEnum.Right:
+                    g.FillRectangle(Brushes.Blue, control.Width - mWidth, 0, control.Width, control.Height);
+                    dibujoBorde = true;
                     break;
-                case EdgeEnum.Top:
-                    g.FillRectangle(Brushes.Blue, 0, 0, c.Width, mWidth);
-                    mOutlineDrawn = true;
+                case EsquinasEnum.Top:
+                    g.FillRectangle(Brushes.Blue, 0, 0, control.Width, mWidth);
+                    dibujoBorde = true;
                     break;
-                case EdgeEnum.Bottom:
-                    g.FillRectangle(Brushes.Blue, 0, c.Height - mWidth, c.Width, mWidth);
-                    mOutlineDrawn = true;
+                case EsquinasEnum.Bottom:
+                    g.FillRectangle(Brushes.Blue, 0, control.Height - mWidth, control.Width, mWidth);
+                    dibujoBorde = true;
                     break;
-                case EdgeEnum.None:
-                    if (mOutlineDrawn)
+                case EsquinasEnum.None:
+                    if (dibujoBorde)
                     {
-                        c.Refresh();
-                        mOutlineDrawn = false;
+                        control.Refresh();
+                        dibujoBorde = false;
                     }
                     break;
             }
 
-            if (mMouseDown & mEdge != EdgeEnum.None)
+            if (mouseClick & esquinas != EsquinasEnum.None)
             {
-                c.SuspendLayout();
-                switch (mEdge)
+                control.SuspendLayout();
+                switch (esquinas)
                 {
-                    case EdgeEnum.TopLeft:
-                        c.SetBounds(c.Left + e.X, c.Top + e.Y, c.Width, c.Height);
+                    case EsquinasEnum.TopLeft:
+                        control.SetBounds(control.Left + e.X, control.Top + e.Y, control.Width, control.Height);
                         break;
-                    case EdgeEnum.Left:
-                        c.SetBounds(c.Left + e.X, c.Top, c.Width - e.X, c.Height);
+                    case EsquinasEnum.Left:
+                        control.SetBounds(control.Left + e.X, control.Top, control.Width - e.X, control.Height);
                         break;
-                    case EdgeEnum.Right:
-                        c.SetBounds(c.Left, c.Top, c.Width - (c.Width - e.X), c.Height);
+                    case EsquinasEnum.Right:
+                        control.SetBounds(control.Left, control.Top, control.Width - (control.Width - e.X), control.Height);
                         break;
-                    case EdgeEnum.Top:
-                        c.SetBounds(c.Left, c.Top + e.Y, c.Width, c.Height - e.Y);
+                    case EsquinasEnum.Top:
+                        control.SetBounds(control.Left, control.Top + e.Y, control.Width, control.Height - e.Y);
                         break;
-                    case EdgeEnum.Bottom:
-                        c.SetBounds(c.Left, c.Top, c.Width, c.Height - (c.Height - e.Y));
+                    case EsquinasEnum.Bottom:
+                        control.SetBounds(control.Left, control.Top, control.Width, control.Height - (control.Height - e.Y));
                         break;
                 }
-                c.ResumeLayout();
+                control.ResumeLayout();
             }
             else
             {
@@ -136,46 +137,50 @@ namespace TPIG7
                 {
                     if (e.X <= (mWidth * 4) && e.Y <= (mWidth * 4))
                     {
-
-                        //top left corner
-                        c.Cursor = Cursors.SizeAll;
-                        mEdge = EdgeEnum.TopLeft;
-                        break;
-                    }else if (e.X <= mWidth)
-                    {
-                        //left edge
-                        c.Cursor = Cursors.VSplit;
-                        mEdge = EdgeEnum.Left;
-                        break;
-
-                    }else if(e.X > c.Width - (mWidth + 1))
-                    {
-                        //right edge
-                        c.Cursor = Cursors.VSplit;
-                        mEdge = EdgeEnum.Right;
-                        break;
-                    }else if(e.Y <= mWidth)
-                    {
-                        //top edge
-                        c.Cursor = Cursors.HSplit;
-                        mEdge = EdgeEnum.Top;
-                        break;
-                    }else if (e.Y > c.Height - (mWidth + 1))
-                    {
-                        //bottom edge
-                        c.Cursor = Cursors.HSplit;
-                        mEdge = EdgeEnum.Bottom;
-                        break;
-                    }else 
-                    {
-                        //no edge
-                        c.Cursor = Cursors.Default;
-                        mEdge = EdgeEnum.None;
+                        //esquina superior izquierda
+                        control.Cursor = Cursors.SizeAll;
+                        esquinas = EsquinasEnum.TopLeft;
                         break;
                     }
-                    
- 
-                        
+                    else if (e.X <= mWidth)
+                    {
+                        //esquina izquierda
+                        control.Cursor = Cursors.VSplit;
+                        esquinas = EsquinasEnum.Left;
+                        break;
+
+                    }
+                    else if (e.X > control.Width - (mWidth + 1))
+                    {
+                        //esquina derecha
+                        control.Cursor = Cursors.VSplit;
+                        esquinas = EsquinasEnum.Right;
+                        break;
+                    }
+                    else if (e.Y <= mWidth)
+                    {
+                        //esquina superior
+                        control.Cursor = Cursors.HSplit;
+                        esquinas = EsquinasEnum.Top;
+                        break;
+                    }
+                    else if (e.Y > control.Height - (mWidth + 1))
+                    {
+                        //esquina inferior
+                        control.Cursor = Cursors.HSplit;
+                        esquinas = EsquinasEnum.Bottom;
+                        break;
+                    }
+                    else
+                    {
+                        // sin esquina seleccionada
+                        control.Cursor = Cursors.Default;
+                        esquinas = EsquinasEnum.None;
+                        break;
+                    }
+
+
+
                 }
             }
         }
@@ -184,7 +189,7 @@ namespace TPIG7
         private void mControl_MouseLeave(object sender, System.EventArgs e)
         {
             Control c = (Control)sender;
-            mEdge = EdgeEnum.None;
+            esquinas = EsquinasEnum.None;
             c.Refresh();
         }
     }
