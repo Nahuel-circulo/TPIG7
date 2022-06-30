@@ -274,9 +274,10 @@ namespace TPIG7
             }
         }
 
-        
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
 
-     
+        }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
