@@ -12,13 +12,10 @@ namespace WinFormsApp1
     {
         
 
-        int Tipo { get; set; }
-        Point Inicio { get; set; }
-        Point Fin { get; set; }
-
-        Rectangle Rectangle { get; set; }
+       
 
 
         void Draw(ref Graphics g, Pen p);
+        Poco GetPOCO();
     }
 }

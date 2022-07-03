@@ -32,6 +32,7 @@ namespace WinFormsApp1
             InitializeComponent();
             Bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g= Graphics.FromImage(Bitmap);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             Lienso = new Lienso(ref g, ref pictureBox1, ref Bitmap);
             TipoForma = 0;
 
@@ -142,9 +143,16 @@ namespace WinFormsApp1
             saveFileDialog1.Filter = "JSON |*.json";
             saveFileDialog1.Title = "Guardar como";
             saveFileDialog1.ShowDialog();
+
+            List<Poco> pocos = new List<Poco>();
+            foreach(var item in Lienso.Figuras)
+            {
+                pocos.Add(item.GetPOCO());
+            }
+
             if (saveFileDialog1.FileName != "")
             {
-                var serializer = JsonSerializer.Serialize(Lienso.TachoBasura);
+                var serializer = JsonSerializer.Serialize(pocos);
                 System.IO.File.WriteAllText(saveFileDialog1.FileName, serializer);
             }
 
@@ -192,9 +200,34 @@ namespace WinFormsApp1
 
             if (openFileDialog1.FileName != "")
             {
-                Lienso.TachoBasura = JsonSerializer.Deserialize<TachoBasura>(File.ReadAllText(openFileDialog1.FileName));
+                Lienso.SetPoco( JsonSerializer.Deserialize<List<Poco>>(File.ReadAllText(openFileDialog1.FileName)));
+
                 Lienso.ReDraing();
             }
+        }
+
+        private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro que desea descartar los cambios?", "Borrar", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                Lienso.Clear();
+                Lienso.ReDraing(); 
+            }
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Lienso.cambios())
+            {
+                DialogResult result = MessageBox.Show("¿Está seguro que desea descartar los cambios?", "Borrar", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    this.Close();
+                }
+
+            }else this.Close();
+
         }
     }
 }

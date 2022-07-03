@@ -13,19 +13,23 @@ namespace WinFormsApp1
         int tipo;
         Rectangle rectangle;
         string texto;
-        Point inicio;
-        Point fin;
+      
         public Forma(int tipo, Rectangle rectangle)
         {
             this.tipo = tipo;
             this.rectangle = rectangle;
         }
 
+        public Forma(Poco p)
+        {
+            tipo = p.Tipo;
+            rectangle = new Rectangle(p.Punto.X,p.Punto.Y, p.Ancho, p.Alto);
+        }
+
         public int Tipo { get => tipo; set => tipo = value; }
         public Rectangle Rectangle { get => rectangle; set => rectangle = value; }
         public string Texto { get => texto; set => texto = value; }
-        public Point Inicio { get => inicio; set => inicio = value; }
-        public Point Fin { get => fin; set => fin = value; }
+  
 
         public void Draw(ref Graphics g, Pen p)
         {
@@ -39,6 +43,15 @@ namespace WinFormsApp1
                 g.DrawEllipse(p, rectangle);
             }
             
+        }
+        public Poco GetPOCO()
+        {
+            Poco p = new Poco();
+            p.Tipo = tipo;
+            p.Punto = rectangle.Location;
+            p.Ancho = rectangle.Width;
+            p.Alto = rectangle.Height;
+            return p;
         }
     }
 }

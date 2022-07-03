@@ -14,7 +14,8 @@ namespace WinFormsApp1
 {
     internal class Lienso
     {
-        TachoBasura tachoBasura;
+        List<Figuras> figuras ;
+        
         Graphics g;
         Bitmap bitmap;
         Pen pen;
@@ -33,15 +34,16 @@ namespace WinFormsApp1
             g.Clear(Color.White);
             pictureBox.Image = bitmap;
             pen = new Pen(Color.Black, 3);
-            TachoBasura = new TachoBasura();
+           
+            Figuras = new List<Figuras>();
 
         }
 
         public Point PuntoDeEsquina { get => puntoDeEsquina; set => puntoDeEsquina = value; }
         public Pen Pen { get => pen; set => pen = value; }
         
-        internal TachoBasura TachoBasura { get => tachoBasura; set => tachoBasura = value; }
-        
+      
+        internal List<Figuras> Figuras { get => figuras; set => figuras = value; }
 
         public void SetTipoDeFlecha(int i)
         { 
@@ -99,24 +101,29 @@ namespace WinFormsApp1
                 case 0:
                     r = new Rectangle(PuntoDeEsquina.X, puntoDeEsquina.Y, p.X - PuntoDeEsquina.X, p.Y - puntoDeEsquina.Y);
                     forma = new Forma(tipo, r);
-                    tachoBasura.AddForma(forma);
+                    figuras.Add(forma);
+                  
                     break;
                 case 1:
                     r = new Rectangle(PuntoDeEsquina.X, puntoDeEsquina.Y, p.X - PuntoDeEsquina.X, p.Y - puntoDeEsquina.Y);
                     forma = new Forma(tipo, r);
-                    tachoBasura.AddForma(forma);
+                    figuras.Add(forma);
+                 
                     break;
                 case 2:
                     flecha = new Flecha(tipo, puntoDeEsquina, p);
-                    tachoBasura.AddFlecha(flecha);
+                    figuras.Add(flecha);
+                  
                     break;
                 case 3:
                     flecha = new Flecha(tipo, puntoDeEsquina, p);
-                    tachoBasura.AddFlecha(flecha);
+                    figuras.Add(flecha);
+                   
                     break;
                 case 4:
                     flecha = new Flecha(tipo, puntoDeEsquina, p);
-                    tachoBasura.AddFlecha(flecha);
+                    figuras.Add(flecha);
+                    
                     break;
             }
             Draing();
@@ -124,33 +131,55 @@ namespace WinFormsApp1
 
         private void Draing()
         {
-            foreach(var intem in tachoBasura.FlechaList)
+            foreach (var intem in figuras)
             {
                 intem.Draw(ref g, pen);
             }
-            foreach (var intem in tachoBasura.FormaList)
-            {
-                intem.Draw(ref g, pen);
-            }
+        
                 pictureBox.Refresh();
         }
 
         public void ReDraing()
         {
             g.Clear(Color.White);
-            foreach (var intem in tachoBasura.FlechaList)
+            foreach (var intem in figuras)
             {
                 intem.Draw(ref g, pen);
             }
-            foreach (var intem in tachoBasura.FormaList)
-            {
-                intem.Draw(ref g, pen);
-            }
+         
             pictureBox.Refresh();
         }
 
+        public void SetPoco(List<Poco> p)
+        {
+            figuras.Clear();
+            foreach (var intem in p)
+            {
+                if(intem.Tipo ==0 || intem.Tipo == 1)
+                {
+                    figuras.Add(new Forma(intem));
 
+                }
+                else
+                {
+                    figuras.Add(new Flecha(intem));
+                }
+            }
+        }
 
+        public void Clear()
+        {
+            g.Clear(Color.White);
+            figuras.Clear();
+        }
+
+        public bool cambios()
+        {
+            if(figuras.Count == 0)
+            {
+                return false;
+            }else return true;
+        }
     }
 
    

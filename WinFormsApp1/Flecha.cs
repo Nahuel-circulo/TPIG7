@@ -13,7 +13,7 @@ namespace WinFormsApp1
         int tipo;
         Point inicio;
         Point fin;
-        Rectangle rect;
+        
 
         public Flecha(int tipo, Point inicio, Point fin)
         {
@@ -21,11 +21,17 @@ namespace WinFormsApp1
             this.inicio = inicio;
             this.fin = fin;
         }
+        public Flecha(Poco p)
+        {
+            this.tipo = p.Tipo;
+            this.inicio = p.Punto;
+            this.fin = new Point(p.Punto.X + p.Ancho, p.Punto.Y + p.Alto);
+        }
 
         public int Tipo { get => tipo; set => tipo = value; }
         public Point Inicio { get => inicio; set => inicio = value; }
         public Point Fin { get => fin; set => fin = value; }
-        public Rectangle Rectangle { get => rect; set => rect = value; }
+        
 
         public void Draw(ref Graphics g, Pen p)
         {
@@ -47,6 +53,16 @@ namespace WinFormsApp1
             }
 
             g.DrawLine(p,Inicio,Fin);
+        }
+
+        public Poco GetPOCO()
+        {
+            Poco p = new Poco();
+            p.Tipo = tipo;
+            p.Punto = inicio;
+            p.Ancho = fin.X - inicio.X;
+            p.Alto = fin.Y - inicio.Y;
+            return p;
         }
     }
 }
