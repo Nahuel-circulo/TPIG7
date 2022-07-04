@@ -218,15 +218,56 @@ namespace WinFormsApp1
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Close();
+
+        }
+
+        private void VentanaPrinsipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
             if (Lienso.cambios())
             {
                 DialogResult result = MessageBox.Show("¿Está seguro que desea descartar los cambios?", "Borrar", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
+                if (result == DialogResult.No )
                 {
                     this.Close();
                 }
 
-            }else this.Close();
+            }
+            else this.Close();
+        }
+
+        private void editarToolStripMenuItem_MouseDown(object sender, MouseEventArgs e)
+        {
+            foreach (Forma forma in Lienso.Figuras)
+            {
+                int YS = forma.Rectangle.Y;
+                int XS = forma.Rectangle.X;
+                int YI = forma.Rectangle.Y - forma.Rectangle.Height;
+                int XI = forma.Rectangle.X - forma.Rectangle.Width;
+                if ((e.Y < YS && e.Y > YI) && (e.X < XS && e.X > XI))
+                {
+
+                    MyForma otro = new MyForma(forma.Rectangle.Width, forma.Rectangle.Height, forma.Tipo);
+                    ResizableControl resizableControl = new ResizableControl(otro);
+                    otro.ContextMenuStrip = MenuEditarControles;
+                    pictureBox1.Controls.Add(otro);
+                    pictureBox1.Refresh();
+                }
+            }
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+            
+        }
+
+        private void terminarEdicionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void terminarEdicionToolStripMenuItem_MouseDown(object sender, MouseEventArgs e)
+        {
 
         }
     }

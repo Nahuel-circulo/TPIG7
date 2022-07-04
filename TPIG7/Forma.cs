@@ -24,15 +24,15 @@ namespace TPIG7
         public Rectangle Form { get => form; set => form = value; }
         public string Type { get => type; set => type = value; }
 
-        public MyForma CombertirAContol(int Width, int Height, ContextMenuStrip c)
-        {
-            MyForma a = new MyForma(Width,Height,type,c);
-            a.Location = new Point(form.X, form.Y);
+        //public MyForma CombertirAContol(int Width, int Height, ContextMenuStrip c)
+        //{
+        //    MyForma a = new MyForma(Width,Height,type,c);
+        //    a.Location = new Point(form.X, form.Y);
 
-            a.Name = "myRectangle";
-            a.SizeMode = PictureBoxSizeMode.StretchImage;
-            a.ContextMenuStrip = c;
-            return a;
-        }
+        //    a.Name = "myRectangle";
+        //    a.SizeMode = PictureBoxSizeMode.StretchImage;
+        //    a.ContextMenuStrip = c;
+        //    return a;
+        //}
     }
 }

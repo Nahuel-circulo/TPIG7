@@ -257,26 +257,32 @@ namespace TPIG7
 
         private void editarToolStripMenuItem1_MouseDown(object sender, MouseEventArgs e)
         {
-            foreach(Forma forma in rectangulos)
-            {
-                int YS = forma.Form.Y;
-                int XS = forma.Form.X;
-                int YI = forma.Form.Y- forma.Form.Height;
-                int XI = forma.Form.X- forma.Form.Width;
-                if ((e.Y<YS && e.Y >YI)&& (e.X < XS && e.X > XI))
-                {
+        //    foreach(Forma forma in rectangulos)
+        //    {
+        //        int YS = forma.Form.Y;
+        //        int XS = forma.Form.X;
+        //        int YI = forma.Form.Y- forma.Form.Height;
+        //        int XI = forma.Form.X- forma.Form.Width;
+        //        if ((e.Y<YS && e.Y >YI)&& (e.X < XS && e.X > XI))
+        //        {
                     
-                    MyForma otro = forma.CombertirAContol(forma.Form.Width, forma.Form.Height,contextMenuStrip1);
-                    ResizableControl resizableControl = new ResizableControl(otro);
-                    pictureBox1.Controls.Add(otro);
-                    pictureBox1.Refresh();
-                }
-            }
+        //            MyForma otro = forma.CombertirAContol(forma.Form.Width, forma.Form.Height,contextMenuStrip1);
+        //            ResizableControl resizableControl = new ResizableControl(otro);
+        //            pictureBox1.Controls.Add(otro);
+        //            pictureBox1.Refresh();
+        //        }
+        //    }
         }
 
-        
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
 
-     
+        }
+
+        private void editarToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {

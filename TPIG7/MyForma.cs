@@ -15,9 +15,9 @@ namespace TPIG7
 
 
         private int borderSize = 3;
-        private string tipo = "circle";
+        private int tipo;
 
-        public MyForma(int width, int height, string tipe ,ContextMenuStrip c)
+        public MyForma(int width, int height, int tipe ,ContextMenuStrip c)
         {
             tipo = tipe;
             //if (tipe == "circle")
@@ -39,7 +39,7 @@ namespace TPIG7
 
 
             text.Multiline = true;
-            if (tipe == "circle")
+            if (tipe == 1)
             {
                 text.Width = (this.Size.Width - 20) - ((int)(this.Size.Width * 0.25));
                 text.Height = (this.Size.Height - 20) - ((int)(this.Size.Height * 0.25));
@@ -68,20 +68,12 @@ namespace TPIG7
             }
         }
 
-        public string Tipo
+        public int Tipo
         {
             get { return tipo; }
             set
-            {
-                if (value == "circle")
-                {
-
-                    tipo = value;
-                }
-                else
-                {
-                    tipo = "rectangle";
-                }
+            {            
+                tipo = value;
                 this.Invalidate();
             }
         }
@@ -118,7 +110,7 @@ namespace TPIG7
 
                 if (borderSize > 0)
                 {
-                    if (tipo == "circle")
+                    if (tipo == 1)
                     {
                         graphics.DrawEllipse(penBorder, bordeRectangulo);
                     }
@@ -131,11 +123,11 @@ namespace TPIG7
 
         }
 
-        public Forma CreateRectangulo()
-        {
-            Rectangle r = new Rectangle(Location, Size);
-            Forma forma = new Forma(Tipo, r);
-            return forma;
-        }
+        //public Forma CreateRectangulo()
+        //{
+        //    Rectangle r = new Rectangle(Location, Size);
+        //    Forma forma = new Forma(Tipo, r);
+        //    return forma;
+        //}
     }
 }
