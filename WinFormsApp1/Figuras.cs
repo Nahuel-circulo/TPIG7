@@ -17,5 +17,8 @@ namespace WinFormsApp1
 
         void Draw(ref Graphics g, Pen p);
         Poco GetPOCO();
+        bool Contiene(Point p);
+        public int Tipo { get; set; }
+        public Point Location();
     }
 }

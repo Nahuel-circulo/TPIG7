@@ -20,8 +20,9 @@ namespace WinFormsApp1
         Lienso Lienso;
         bool pintar;
         int TipoForma;
-
-
+        Brush b;
+        Font f;
+        Point p;
 
 
 
@@ -35,7 +36,7 @@ namespace WinFormsApp1
             g.SmoothingMode = SmoothingMode.AntiAlias;
             Lienso = new Lienso(ref g, ref pictureBox1, ref Bitmap);
             TipoForma = 0;
-
+         
 
 
 
@@ -87,11 +88,12 @@ namespace WinFormsApp1
         {
             pintar = true;
             Lienso.PuntoDeEsquina = e.Location;
+            if (e.Button == MouseButtons.Right) p = e.Location;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (pintar)
+            if (pintar) 
             {
                 switch (TipoForma)
                 {
@@ -233,42 +235,58 @@ namespace WinFormsApp1
                 }
 
             }
-            else this.Close();
+            
         }
 
         private void editarToolStripMenuItem_MouseDown(object sender, MouseEventArgs e)
         {
-            foreach (Forma forma in Lienso.Figuras)
+            List<Figuras> lista = new List<Figuras>();
+            
+            foreach (Figuras forma in Lienso.Figuras)
             {
-                int YS = forma.Rectangle.Y;
-                int XS = forma.Rectangle.X;
-                int YI = forma.Rectangle.Y - forma.Rectangle.Height;
-                int XI = forma.Rectangle.X - forma.Rectangle.Width;
-                if ((e.Y < YS && e.Y > YI) && (e.X < XS && e.X > XI))
+                
+                if (forma.Contiene(p))
                 {
-
-                    MyForma otro = new MyForma(forma.Rectangle.Width, forma.Rectangle.Height, forma.Tipo);
+                    
+                    MyForma otro = new MyForma((Forma)forma);
+                    otro.Location = forma.Location();
+                    lista.Add(forma);
+                    otro.Name = "myRectangle";
+                    otro.SizeMode = PictureBoxSizeMode.StretchImage;
                     ResizableControl resizableControl = new ResizableControl(otro);
                     otro.ContextMenuStrip = MenuEditarControles;
                     pictureBox1.Controls.Add(otro);
-                    pictureBox1.Refresh();
+                    
+                   
                 }
             }
-        }
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
+            foreach(Figuras figuras in lista)
+            {
+                Lienso.remover(figuras);
+            }
             
+            Lienso.ReDraing();
         }
 
         private void terminarEdicionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Lienso.getFigura(MenuEditarControles.SourceControl as MyForma);
+            pictureBox1.Controls.Remove(MenuEditarControles.SourceControl);
         }
 
         private void terminarEdicionToolStripMenuItem_MouseDown(object sender, MouseEventArgs e)
         {
 
+        }
+
+        private void MenuEditarFormas_MouseDown(object sender, MouseEventArgs e)
+        {
+          
+        }
+
+        private void MenuEditarControles_Opening(object sender, CancelEventArgs e)
+        {
+           
         }
     }
 }

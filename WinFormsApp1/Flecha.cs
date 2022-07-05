@@ -31,7 +31,7 @@ namespace WinFormsApp1
         public int Tipo { get => tipo; set => tipo = value; }
         public Point Inicio { get => inicio; set => inicio = value; }
         public Point Fin { get => fin; set => fin = value; }
-        
+     
 
         public void Draw(ref Graphics g, Pen p)
         {
@@ -59,10 +59,22 @@ namespace WinFormsApp1
         {
             Poco p = new Poco();
             p.Tipo = tipo;
+            p.Texto = "";
             p.Punto = inicio;
             p.Ancho = fin.X - inicio.X;
             p.Alto = fin.Y - inicio.Y;
+            p.StringFormat = new StringFormat();
             return p;
+        }
+
+        public bool Contiene(Point p)
+        {
+            return false;
+        }
+
+        public Point Location()
+        {
+            return inicio;
         }
     }
 }

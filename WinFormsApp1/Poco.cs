@@ -15,7 +15,8 @@ namespace WinFormsApp1
         public Point Punto { get; set; }
         public int Ancho { get; set; }
         public int Alto { get; set; }
-       // public string Texto { get; set; }
+        public string Texto { get; set; }
+        public StringFormat StringFormat { get; set; }
 
 
     }

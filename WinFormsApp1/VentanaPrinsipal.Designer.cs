@@ -150,7 +150,7 @@
             this.borrarToolStripMenuItem});
             this.MenuEditarFormas.Name = "contextMenuStrip1";
             this.MenuEditarFormas.Size = new System.Drawing.Size(107, 48);
-            this.MenuEditarFormas.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            this.MenuEditarFormas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuEditarFormas_MouseDown);
             // 
             // editarToolStripMenuItem
             // 
@@ -240,6 +240,7 @@
             this.borrarToolStripMenuItem1});
             this.MenuEditarControles.Name = "MenuEditarControles";
             this.MenuEditarControles.Size = new System.Drawing.Size(181, 70);
+            this.MenuEditarControles.Opening += new System.ComponentModel.CancelEventHandler(this.MenuEditarControles_Opening);
             // 
             // terminarEdicionToolStripMenuItem
             // 

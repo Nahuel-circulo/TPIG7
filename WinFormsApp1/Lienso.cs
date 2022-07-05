@@ -23,7 +23,8 @@ namespace WinFormsApp1
         Font font;
         Point puntoDeEsquina;
         PictureBox pictureBox;
-        
+        StringFormat stringFormat;
+
 
         public Lienso(ref Graphics graphics, ref PictureBox p, ref Bitmap b)
         {
@@ -34,9 +35,12 @@ namespace WinFormsApp1
             g.Clear(Color.White);
             pictureBox.Image = bitmap;
             pen = new Pen(Color.Black, 3);
-           
+            stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
             Figuras = new List<Figuras>();
-
+            brush = new SolidBrush(Color.Black);
+            font = new Font(new FontFamily("arial"), 16);
         }
 
         public Point PuntoDeEsquina { get => puntoDeEsquina; set => puntoDeEsquina = value; }
@@ -100,13 +104,13 @@ namespace WinFormsApp1
             {
                 case 0:
                     r = new Rectangle(PuntoDeEsquina.X, puntoDeEsquina.Y, p.X - PuntoDeEsquina.X, p.Y - puntoDeEsquina.Y);
-                    forma = new Forma(tipo, r);
+                    forma = new Forma(tipo, r,stringFormat, font,brush);
                     figuras.Add(forma);
                   
                     break;
                 case 1:
                     r = new Rectangle(PuntoDeEsquina.X, puntoDeEsquina.Y, p.X - PuntoDeEsquina.X, p.Y - puntoDeEsquina.Y);
-                    forma = new Forma(tipo, r);
+                    forma = new Forma(tipo, r, stringFormat, font, brush);
                     figuras.Add(forma);
                  
                     break;
@@ -157,7 +161,7 @@ namespace WinFormsApp1
             {
                 if(intem.Tipo ==0 || intem.Tipo == 1)
                 {
-                    figuras.Add(new Forma(intem));
+                    figuras.Add(new Forma(intem,stringFormat,font,brush));
 
                 }
                 else
@@ -179,6 +183,16 @@ namespace WinFormsApp1
             {
                 return false;
             }else return true;
+        }
+        public void remover(Figuras f)
+        {
+            figuras.Remove(f);
+        } 
+
+        public void getFigura(MyForma f)
+        {
+            figuras.Add(f.GetForma(stringFormat, brush));
+            ReDraing();
         }
     }
 

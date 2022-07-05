@@ -17,16 +17,16 @@ namespace WinFormsApp1
         private int borderSize = 3;
         private int tipo;
         private TextBox text = new TextBox();
-        public MyForma(int width, int height, int tipe)
+        public MyForma(Forma f)
         {
-            tipo = tipe;
+            tipo = f.Tipo;
             this.BackColor = Color.Transparent;
-            this.Size = new Size(width, height);
+            this.Size = new Size(f.Rectangle.Width, f.Rectangle.Height);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
-            text.Text = "";
+            text.Text = f.Texto;
             text.Multiline = true;
 
-            if (tipe == 1)
+            if (f.Tipo == 1)
             {
                 text.Width = (this.Size.Width - 20) - ((int)(this.Size.Width * 0.3));
                 text.Height = (this.Size.Height - 20) - ((int)(this.Size.Height * 0.3));
@@ -113,6 +113,12 @@ namespace WinFormsApp1
                 }
             }
 
+        }
+
+        public Forma GetForma(StringFormat sf,Brush b)
+        {
+             Rectangle r = new Rectangle(this.Location, this.Size);
+            return new Forma(tipo, r, sf, text.Font, b,text.Text);
         }
     }
 }
