@@ -70,61 +70,67 @@
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(140, 431);
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(140, 505);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // button1
             // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.Location = new System.Drawing.Point(3, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 80);
+            this.button1.Size = new System.Drawing.Size(134, 94);
             this.button1.TabIndex = 0;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(3, 89);
+            this.button2.Location = new System.Drawing.Point(3, 103);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(134, 80);
+            this.button2.Size = new System.Drawing.Size(134, 94);
             this.button2.TabIndex = 1;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.Location = new System.Drawing.Point(3, 175);
+            this.button3.Location = new System.Drawing.Point(3, 203);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(134, 80);
+            this.button3.Size = new System.Drawing.Size(134, 94);
             this.button3.TabIndex = 2;
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-            this.button4.Location = new System.Drawing.Point(3, 261);
+            this.button4.Location = new System.Drawing.Point(3, 303);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(134, 80);
+            this.button4.Size = new System.Drawing.Size(134, 94);
             this.button4.TabIndex = 3;
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
+            this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-            this.button5.Location = new System.Drawing.Point(3, 347);
+            this.button5.Location = new System.Drawing.Point(3, 403);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(134, 81);
+            this.button5.Size = new System.Drawing.Size(134, 94);
             this.button5.TabIndex = 4;
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
@@ -132,13 +138,12 @@
             // pictureBox1
             // 
             this.pictureBox1.ContextMenuStrip = this.MenuEditarFormas;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Location = new System.Drawing.Point(141, 24);
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(140, 24);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(948, 431);
+            this.pictureBox1.Size = new System.Drawing.Size(846, 505);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
@@ -150,19 +155,18 @@
             this.borrarToolStripMenuItem});
             this.MenuEditarFormas.Name = "contextMenuStrip1";
             this.MenuEditarFormas.Size = new System.Drawing.Size(107, 48);
-            
             // 
             // editarToolStripMenuItem
             // 
             this.editarToolStripMenuItem.Name = "editarToolStripMenuItem";
-            this.editarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editarToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.editarToolStripMenuItem.Text = "Editar";
             this.editarToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.editarToolStripMenuItem_MouseDown);
             // 
             // borrarToolStripMenuItem
             // 
             this.borrarToolStripMenuItem.Name = "borrarToolStripMenuItem";
-            this.borrarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.borrarToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.borrarToolStripMenuItem.Text = "Borrar";
             this.borrarToolStripMenuItem.Click += new System.EventHandler(this.borrarToolStripMenuItem_Click);
             // 
@@ -172,10 +176,9 @@
             this.archivoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1089, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(986, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
-           
             // 
             // archivoToolStripMenuItem
             // 
@@ -203,7 +206,6 @@
             this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
             this.guardarToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.guardarToolStripMenuItem.Text = "Guardar";
-          
             // 
             // jsonToolStripMenuItem
             // 
@@ -239,8 +241,7 @@
             this.terminarEdicionToolStripMenuItem,
             this.borrarToolStripMenuItem1});
             this.MenuEditarControles.Name = "MenuEditarControles";
-            this.MenuEditarControles.Size = new System.Drawing.Size(181, 70);
-            ;
+            this.MenuEditarControles.Size = new System.Drawing.Size(163, 48);
             // 
             // terminarEdicionToolStripMenuItem
             // 
@@ -252,7 +253,7 @@
             // borrarToolStripMenuItem1
             // 
             this.borrarToolStripMenuItem1.Name = "borrarToolStripMenuItem1";
-            this.borrarToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.borrarToolStripMenuItem1.Size = new System.Drawing.Size(162, 22);
             this.borrarToolStripMenuItem1.Text = "Borrar";
             this.borrarToolStripMenuItem1.Click += new System.EventHandler(this.borrarToolStripMenuItem1_Click);
             // 
@@ -260,15 +261,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1089, 455);
+            this.ClientSize = new System.Drawing.Size(986, 529);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(566, 568);
             this.Name = "VentanaPrinsipal";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VentanaPrinsipal_FormClosing);
-            
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.MenuEditarFormas.ResumeLayout(false);
