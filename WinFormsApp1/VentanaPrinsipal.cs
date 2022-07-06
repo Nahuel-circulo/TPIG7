@@ -274,19 +274,6 @@ namespace WinFormsApp1
             pictureBox1.Controls.Remove(MenuEditarControles.SourceControl);
         }
 
-        private void terminarEdicionToolStripMenuItem_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void MenuEditarFormas_MouseDown(object sender, MouseEventArgs e)
-        {
-          
-        }
-
-        private void MenuEditarControles_Opening(object sender, CancelEventArgs e)
-        {
-           
-        }
+      
     }
 }

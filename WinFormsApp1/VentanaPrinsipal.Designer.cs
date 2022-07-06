@@ -150,7 +150,7 @@
             this.borrarToolStripMenuItem});
             this.MenuEditarFormas.Name = "contextMenuStrip1";
             this.MenuEditarFormas.Size = new System.Drawing.Size(107, 48);
-            this.MenuEditarFormas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuEditarFormas_MouseDown);
+            
             // 
             // editarToolStripMenuItem
             // 
@@ -240,7 +240,7 @@
             this.borrarToolStripMenuItem1});
             this.MenuEditarControles.Name = "MenuEditarControles";
             this.MenuEditarControles.Size = new System.Drawing.Size(181, 70);
-            this.MenuEditarControles.Opening += new System.ComponentModel.CancelEventHandler(this.MenuEditarControles_Opening);
+       
             // 
             // terminarEdicionToolStripMenuItem
             // 
@@ -248,7 +248,7 @@
             this.terminarEdicionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.terminarEdicionToolStripMenuItem.Text = "Terminar Edicion";
             this.terminarEdicionToolStripMenuItem.Click += new System.EventHandler(this.terminarEdicionToolStripMenuItem_Click);
-            this.terminarEdicionToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.terminarEdicionToolStripMenuItem_MouseDown);
+
             // 
             // borrarToolStripMenuItem1
             // 
