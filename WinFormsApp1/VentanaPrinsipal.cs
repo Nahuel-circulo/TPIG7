@@ -43,10 +43,9 @@ namespace WinFormsApp1
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        
 
-        }
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -75,14 +74,8 @@ namespace WinFormsApp1
             Lienso.SetTipoDeFlecha(4);
             TipoForma = 4;
         }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
 
-        }
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
+     
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -129,15 +122,6 @@ namespace WinFormsApp1
          
         }
 
-        private void archivoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void GueardarJsonToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -274,6 +258,30 @@ namespace WinFormsApp1
             pictureBox1.Controls.Remove(MenuEditarControles.SourceControl);
         }
 
-      
+        private void borrarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<Figuras> lista = new List<Figuras>();
+
+            foreach (Figuras forma in Lienso.Figuras)
+            { 
+                if (forma.Contiene(p))
+                {
+                    lista.Add(forma);
+                }
+            }
+            foreach (Figuras figuras in lista)
+            {
+                Lienso.remover(figuras);
+            }
+
+            Lienso.ReDraing();
+        }
+
+       
+        private void borrarToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+           
+            pictureBox1.Controls.Remove(MenuEditarControles.SourceControl);
+        }
     }
 }

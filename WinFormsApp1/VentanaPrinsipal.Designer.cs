@@ -138,7 +138,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(948, 431);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
@@ -155,15 +155,16 @@
             // editarToolStripMenuItem
             // 
             this.editarToolStripMenuItem.Name = "editarToolStripMenuItem";
-            this.editarToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.editarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editarToolStripMenuItem.Text = "Editar";
             this.editarToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.editarToolStripMenuItem_MouseDown);
             // 
             // borrarToolStripMenuItem
             // 
             this.borrarToolStripMenuItem.Name = "borrarToolStripMenuItem";
-            this.borrarToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.borrarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.borrarToolStripMenuItem.Text = "Borrar";
+            this.borrarToolStripMenuItem.Click += new System.EventHandler(this.borrarToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -174,7 +175,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(1089, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+           
             // 
             // archivoToolStripMenuItem
             // 
@@ -186,7 +187,6 @@
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
             this.archivoToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.archivoToolStripMenuItem.Text = "archivo";
-            this.archivoToolStripMenuItem.Click += new System.EventHandler(this.archivoToolStripMenuItem_Click);
             // 
             // abrirToolStripMenuItem
             // 
@@ -203,7 +203,7 @@
             this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
             this.guardarToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.guardarToolStripMenuItem.Text = "Guardar";
-            this.guardarToolStripMenuItem.Click += new System.EventHandler(this.guardarToolStripMenuItem_Click);
+          
             // 
             // jsonToolStripMenuItem
             // 
@@ -240,21 +240,21 @@
             this.borrarToolStripMenuItem1});
             this.MenuEditarControles.Name = "MenuEditarControles";
             this.MenuEditarControles.Size = new System.Drawing.Size(181, 70);
-       
+            ;
             // 
             // terminarEdicionToolStripMenuItem
             // 
             this.terminarEdicionToolStripMenuItem.Name = "terminarEdicionToolStripMenuItem";
-            this.terminarEdicionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.terminarEdicionToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.terminarEdicionToolStripMenuItem.Text = "Terminar Edicion";
             this.terminarEdicionToolStripMenuItem.Click += new System.EventHandler(this.terminarEdicionToolStripMenuItem_Click);
-
             // 
             // borrarToolStripMenuItem1
             // 
             this.borrarToolStripMenuItem1.Name = "borrarToolStripMenuItem1";
             this.borrarToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.borrarToolStripMenuItem1.Text = "Borrar";
+            this.borrarToolStripMenuItem1.Click += new System.EventHandler(this.borrarToolStripMenuItem1_Click);
             // 
             // VentanaPrinsipal
             // 
@@ -268,7 +268,7 @@
             this.Name = "VentanaPrinsipal";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VentanaPrinsipal_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.MenuEditarFormas.ResumeLayout(false);
