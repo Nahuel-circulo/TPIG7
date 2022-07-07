@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Collections;
 
 namespace WinFormsApp1
 {
-    internal class Forma : Figuras
+    internal class Forma : Figuras 
     {
         int tipo;
         Rectangle rectangle;
@@ -94,5 +95,6 @@ namespace WinFormsApp1
         {
             return rectangle.Location;
         }
+
     }
 }

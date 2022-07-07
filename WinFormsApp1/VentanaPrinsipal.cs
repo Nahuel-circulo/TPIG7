@@ -277,5 +277,11 @@ namespace WinFormsApp1
             Lienso.ResizeLienzo(pictureBox1.Width, pictureBox1.Height);
             Lienso.ReDraing();
         }
+
+        private void eliminarUltimaFiguraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Lienso.Deshacer();
+            Lienso.ReDraing();
+        }
     }
 }

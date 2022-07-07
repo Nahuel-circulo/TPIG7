@@ -8,7 +8,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using System.Text.Json;
-
+using System.Diagnostics;
 
 namespace WinFormsApp1
 {
@@ -46,14 +46,18 @@ namespace WinFormsApp1
 
         public void ResizeLienzo(int width, int height)
         {
-            this.pictureBox.Width = width;
-            this.pictureBox.Height = height;
-            this.bitmap = new Bitmap(width, height);
-            pictureBox.Image = bitmap;
-            g = Graphics.FromImage(bitmap);
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.Clear(Color.White);
-            Drawing();
+            if (width != 0 && height != 0)
+            {
+
+                this.pictureBox.Width = width;
+                this.pictureBox.Height = height;
+                this.bitmap = new Bitmap(width, height);
+                pictureBox.Image = bitmap;
+                g = Graphics.FromImage(bitmap);
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.Clear(Color.White);
+                Drawing();
+            }
         }
         public Point PuntoDeEsquina { get => puntoDeEsquina; set => puntoDeEsquina = value; }
         public Pen Pen { get => pen; set => pen = value; }
@@ -169,16 +173,15 @@ namespace WinFormsApp1
         public void SetPoco(List<Poco> p)
         {
             figuras.Clear();
-            foreach (var intem in p)
+            foreach (var item in p)
             {
-                if (intem.Tipo == 0 || intem.Tipo == 1)
+                if (item.Tipo == 0 || item.Tipo == 1)
                 {
-                    figuras.Add(new Forma(intem, stringFormat, font, brush));
-
+                    figuras.Add(new Forma(item, stringFormat, font, brush));
                 }
                 else
                 {
-                    figuras.Add(new Flecha(intem));
+                    figuras.Add(new Flecha(item));
                 }
             }
         }
@@ -201,6 +204,13 @@ namespace WinFormsApp1
         {
             figuras.Remove(f);
         }
+
+        public void Deshacer()
+        {
+            figuras.Remove(figuras.Last());
+
+        }
+
 
         public void getFigura(MyForma f)
         {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
 
 namespace WinFormsApp1
 {
@@ -13,7 +14,7 @@ namespace WinFormsApp1
         int tipo;
         Point inicio;
         Point fin;
-        
+        Rectangle flechaRect;
 
         public Flecha(int tipo, Point inicio, Point fin)
         {
@@ -61,15 +62,18 @@ namespace WinFormsApp1
             p.Tipo = tipo;
             p.Texto = "";
             p.Punto = inicio;
-            p.Ancho = fin.X - inicio.X;
-            p.Alto = fin.Y - inicio.Y;
+            p.Ancho = fin.X ;
+            p.Alto = fin.Y ;
             p.StringFormat = new StringFormat();
+            flechaRect = new Rectangle(p.Punto,new Size(p.Ancho,p.Alto));
             return p;
         }
 
         public bool Contiene(Point p)
         {
-            return false;
+            //No Funciona
+            Debug.WriteLine(flechaRect);
+            return flechaRect.Contains(p);
         }
 
         public Point Location()

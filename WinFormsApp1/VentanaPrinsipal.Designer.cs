@@ -48,6 +48,7 @@
             this.imagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nuevoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eliminarUltimaFiguraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuEditarControles = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.terminarEdicionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borrarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -173,7 +174,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.archivoToolStripMenuItem});
+            this.archivoToolStripMenuItem,
+            this.eliminarUltimaFiguraToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(984, 24);
@@ -234,6 +236,13 @@
             this.salirToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
+            // 
+            // eliminarUltimaFiguraToolStripMenuItem
+            // 
+            this.eliminarUltimaFiguraToolStripMenuItem.Name = "eliminarUltimaFiguraToolStripMenuItem";
+            this.eliminarUltimaFiguraToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.eliminarUltimaFiguraToolStripMenuItem.Text = "Deshacer";
+            this.eliminarUltimaFiguraToolStripMenuItem.Click += new System.EventHandler(this.eliminarUltimaFiguraToolStripMenuItem_Click);
             // 
             // MenuEditarControles
             // 
@@ -305,5 +314,6 @@
         private System.Windows.Forms.ContextMenuStrip MenuEditarControles;
         private System.Windows.Forms.ToolStripMenuItem terminarEdicionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem borrarToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem eliminarUltimaFiguraToolStripMenuItem;
     }
 }
