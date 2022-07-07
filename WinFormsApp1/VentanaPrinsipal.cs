@@ -10,37 +10,29 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
+using System.Diagnostics;
 
 namespace WinFormsApp1
 {
-    public partial class VentanaPrinsipal : Form
+    public partial class VentanaPrincipal : Form
     {
         Bitmap Bitmap;
         Graphics g;
         Lienso Lienso;
         bool pintar;
         int TipoForma;
-        Brush b;
-        Font f;
+      
         Point p;
 
-
-
-
-
-        public VentanaPrinsipal()
+        public VentanaPrincipal()
         {
             InitializeComponent();
             Bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            g= Graphics.FromImage(Bitmap);
+            g = Graphics.FromImage(Bitmap);
             g.SmoothingMode = SmoothingMode.AntiAlias;
             Lienso = new Lienso(ref g, ref pictureBox1, ref Bitmap);
             TipoForma = 0;
          
-
-
-
-
         }
 
         
@@ -75,8 +67,6 @@ namespace WinFormsApp1
             TipoForma = 4;
         }
 
-     
-
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             pintar = true;
@@ -99,7 +89,6 @@ namespace WinFormsApp1
                     case 2:
                         Lienso.PreViewFlecha(e.Location);
                         break;
-
                     case 3:
                         Lienso.PreViewFlecha(e.Location);
                         break;
@@ -118,8 +107,6 @@ namespace WinFormsApp1
         {
             pintar=false;
             Lienso.GuardarFigura(e.Location, TipoForma);
-
-         
         }
 
 
@@ -139,7 +126,7 @@ namespace WinFormsApp1
             if (saveFileDialog1.FileName != "")
             {
                 var serializer = JsonSerializer.Serialize(pocos);
-                System.IO.File.WriteAllText(saveFileDialog1.FileName, serializer);
+                File.WriteAllText(saveFileDialog1.FileName, serializer);
             }
 
             
@@ -148,18 +135,14 @@ namespace WinFormsApp1
         private void imagenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "JPeg |*.jpg|BMP |*.bmp";
+            saveFileDialog1.Filter = "JPeg |*.jpeg|BMP |*.bmp";
             saveFileDialog1.Title = "Guardar como";
             saveFileDialog1.ShowDialog();
 
             if (saveFileDialog1.FileName != "")
             {
-                // Save the Image via a FileStream created by the OpenFile method.
-                System.IO.FileStream fs =
-                   (System.IO.FileStream)saveFileDialog1.OpenFile();
-                // Saves the Image in the appropriate ImageFormat based upon the
-                // File type selected in the dialog box.
-                // NOTE that the FilterIndex property is one-based.
+                FileStream fs = (FileStream)saveFileDialog1.OpenFile();
+
                 switch (saveFileDialog1.FilterIndex)
                 {
                     case 1:
@@ -198,8 +181,9 @@ namespace WinFormsApp1
             if (result == DialogResult.Yes)
             {
                 Lienso.Clear();
-                Lienso.ReDraing(); 
+                Lienso.ReDraing();
             }
+            
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
@@ -213,11 +197,12 @@ namespace WinFormsApp1
             if (Lienso.cambios())
             {
                 DialogResult result = MessageBox.Show("¿Está seguro que desea descartar los cambios?", "Borrar", MessageBoxButtons.YesNo);
-                if (result == DialogResult.No )
+                
+                if (result == DialogResult.No)
                 {
-                    this.Close();
+                    e.Cancel = true;
                 }
-
+                
             }
             
         }
@@ -254,8 +239,11 @@ namespace WinFormsApp1
 
         private void terminarEdicionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MenuEditarControles.SourceControl != null)
+            {
             Lienso.getFigura(MenuEditarControles.SourceControl as MyForma);
             pictureBox1.Controls.Remove(MenuEditarControles.SourceControl);
+            }
         }
 
         private void borrarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -280,8 +268,14 @@ namespace WinFormsApp1
        
         private void borrarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-           
+
             pictureBox1.Controls.Remove(MenuEditarControles.SourceControl);
+        }
+
+        private void VentanaPrincipal_Resize(object sender, EventArgs e)
+        {
+            Lienso.ResizeLienzo(pictureBox1.Width, pictureBox1.Height);
+            Lienso.ReDraing();
         }
     }
 }

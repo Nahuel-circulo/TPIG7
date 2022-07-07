@@ -14,8 +14,8 @@ namespace WinFormsApp1
 {
     internal class Lienso
     {
-        List<Figuras> figuras ;
-        
+        List<Figuras> figuras;
+
         Graphics g;
         Bitmap bitmap;
         Pen pen;
@@ -43,21 +43,33 @@ namespace WinFormsApp1
             font = new Font(new FontFamily("arial"), 16);
         }
 
+
+        public void ResizeLienzo(int width, int height)
+        {
+            this.pictureBox.Width = width;
+            this.pictureBox.Height = height;
+            this.bitmap = new Bitmap(width, height);
+            pictureBox.Image = bitmap;
+            g = Graphics.FromImage(bitmap);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.Clear(Color.White);
+            Drawing();
+        }
         public Point PuntoDeEsquina { get => puntoDeEsquina; set => puntoDeEsquina = value; }
         public Pen Pen { get => pen; set => pen = value; }
-        
-      
+
+
         internal List<Figuras> Figuras { get => figuras; set => figuras = value; }
 
         public void SetTipoDeFlecha(int i)
-        { 
-            
-            if(i== 2)
+        {
+
+            if (i == 2)
             {
                 pen.StartCap = LineCap.Flat;
                 pen.EndCap = LineCap.ArrowAnchor;
             }
-            if (i== 3)
+            if (i == 3)
             {
                 pen.StartCap = LineCap.ArrowAnchor;
                 pen.EndCap = LineCap.ArrowAnchor;
@@ -73,8 +85,8 @@ namespace WinFormsApp1
         public void PreViewRectangulo(Point p)
         {
             g.Clear(Color.White);
-            g.DrawRectangle(pen, new Rectangle(PuntoDeEsquina.X,puntoDeEsquina.Y,p.X - PuntoDeEsquina.X, p.Y- puntoDeEsquina.Y));
-            Draing();
+            g.DrawRectangle(pen, new Rectangle(PuntoDeEsquina.X, puntoDeEsquina.Y, p.X - PuntoDeEsquina.X, p.Y - puntoDeEsquina.Y));
+            Drawing();
             pictureBox.Refresh();
 
         }
@@ -82,7 +94,7 @@ namespace WinFormsApp1
         {
             g.Clear(Color.White);
             g.DrawEllipse(pen, new Rectangle(PuntoDeEsquina.X, puntoDeEsquina.Y, p.X - PuntoDeEsquina.X, p.Y - puntoDeEsquina.Y));
-            Draing();
+            Drawing();
             pictureBox.Refresh();
         }
 
@@ -90,11 +102,11 @@ namespace WinFormsApp1
         {
             g.Clear(Color.White);
             g.DrawLine(Pen, PuntoDeEsquina, p);
-            Draing();
+            Drawing();
             pictureBox.Refresh();
 
         }
-        public void GuardarFigura(Point p,int tipo)
+        public void GuardarFigura(Point p, int tipo)
         {
             g.Clear(Color.White);
             Rectangle r;
@@ -104,43 +116,43 @@ namespace WinFormsApp1
             {
                 case 0:
                     r = new Rectangle(PuntoDeEsquina.X, puntoDeEsquina.Y, p.X - PuntoDeEsquina.X, p.Y - puntoDeEsquina.Y);
-                    forma = new Forma(tipo, r,stringFormat, font,brush);
+                    forma = new Forma(tipo, r, stringFormat, font, brush);
                     figuras.Add(forma);
-                  
+
                     break;
                 case 1:
                     r = new Rectangle(PuntoDeEsquina.X, puntoDeEsquina.Y, p.X - PuntoDeEsquina.X, p.Y - puntoDeEsquina.Y);
                     forma = new Forma(tipo, r, stringFormat, font, brush);
                     figuras.Add(forma);
-                 
+
                     break;
                 case 2:
                     flecha = new Flecha(tipo, puntoDeEsquina, p);
                     figuras.Add(flecha);
-                  
+
                     break;
                 case 3:
                     flecha = new Flecha(tipo, puntoDeEsquina, p);
                     figuras.Add(flecha);
-                   
+
                     break;
                 case 4:
                     flecha = new Flecha(tipo, puntoDeEsquina, p);
                     figuras.Add(flecha);
-                    
+
                     break;
             }
-            Draing();
+            Drawing();
         }
 
-        private void Draing()
+        private void Drawing()
         {
             foreach (var intem in figuras)
             {
                 intem.Draw(ref g, pen);
             }
-        
-                pictureBox.Refresh();
+
+            pictureBox.Refresh();
         }
 
         public void ReDraing()
@@ -150,7 +162,7 @@ namespace WinFormsApp1
             {
                 intem.Draw(ref g, pen);
             }
-         
+
             pictureBox.Refresh();
         }
 
@@ -159,9 +171,9 @@ namespace WinFormsApp1
             figuras.Clear();
             foreach (var intem in p)
             {
-                if(intem.Tipo ==0 || intem.Tipo == 1)
+                if (intem.Tipo == 0 || intem.Tipo == 1)
                 {
-                    figuras.Add(new Forma(intem,stringFormat,font,brush));
+                    figuras.Add(new Forma(intem, stringFormat, font, brush));
 
                 }
                 else
@@ -179,15 +191,16 @@ namespace WinFormsApp1
 
         public bool cambios()
         {
-            if(figuras.Count == 0)
+            if (figuras.Count == 0)
             {
                 return false;
-            }else return true;
+            }
+            return true;
         }
         public void remover(Figuras f)
         {
             figuras.Remove(f);
-        } 
+        }
 
         public void getFigura(MyForma f)
         {
@@ -196,6 +209,6 @@ namespace WinFormsApp1
         }
     }
 
-   
+
 }
 

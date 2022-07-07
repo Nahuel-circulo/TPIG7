@@ -10,11 +10,6 @@ namespace WinFormsApp1
 {
     internal interface Figuras
     {
-        
-
-       
-
-
         void Draw(ref Graphics g, Pen p);
         Poco GetPOCO();
         bool Contiene(Point p);
