@@ -18,7 +18,7 @@ namespace WinFormsApp1
     {
         Bitmap Bitmap;
         Graphics g;
-        Lienso Lienso;
+        Lienzo Lienso;
         bool pintar;
         int TipoForma;
       
@@ -30,7 +30,7 @@ namespace WinFormsApp1
             Bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(Bitmap);
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            Lienso = new Lienso(ref g, ref pictureBox1, ref Bitmap);
+            Lienso = new Lienzo(ref g, ref pictureBox1, ref Bitmap);
             TipoForma = 0;
          
         }
@@ -216,7 +216,7 @@ namespace WinFormsApp1
                 
                 if (forma.Contiene(p))
                 {
-                    
+
                     MyForma otro = new MyForma((Forma)forma);
                     otro.Location = forma.Location();
                     lista.Add(forma);
@@ -226,7 +226,6 @@ namespace WinFormsApp1
                     otro.ContextMenuStrip = MenuEditarControles;
                     pictureBox1.Controls.Add(otro);
                     
-                   
                 }
             }
             foreach(Figuras figuras in lista)
@@ -257,6 +256,7 @@ namespace WinFormsApp1
                     lista.Add(forma);
                 }
             }
+
             foreach (Figuras figuras in lista)
             {
                 Lienso.remover(figuras);

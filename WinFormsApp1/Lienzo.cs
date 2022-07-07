@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace WinFormsApp1
 {
-    internal class Lienso
+    internal class Lienzo
     {
         List<Figuras> figuras;
 
@@ -26,7 +26,7 @@ namespace WinFormsApp1
         StringFormat stringFormat;
 
 
-        public Lienso(ref Graphics graphics, ref PictureBox p, ref Bitmap b)
+        public Lienzo(ref Graphics graphics, ref PictureBox p, ref Bitmap b)
         {
             g = graphics;
             pictureBox = p;
